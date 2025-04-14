@@ -1,0 +1,110 @@
+.sectionTitle
+    font-weight: normal
+    font-size: 39px
+    line-height: 100%
+    color: #fff
+    position: relative
+    display: inline-block
+    // margin-bottom: 77px
+    margin-bottom: 21px
+    @media (max-width: 576px)
+        text-align: center
+        font-size: 23px
+        line-height: 100%
+        width: 100%
+        margin-bottom: 60px
+.bef
+    &::after, &::before
+        content: ''
+        position: absolute
+        top: 50% !important
+        transform: translateY(-50%)
+        width: 37px
+        height: 1px
+        background-color: #fff
+        @media (max-width: 576px)
+            width: 100%
+            top: unset !important
+    &::after
+        right: -50px
+        @media (max-width: 576px)
+            right: 0px
+            top: -20px !important
+    &::before
+        left: -50px
+        @media (max-width: 576px)
+            left: 0px
+            bottom: -20px
+.bef-fix
+    &::after, &::before
+        @media (max-width: 576px)
+            width: calc(100% - 30px)
+    &::before
+        @media (max-width: 576px)
+            left: 15px
+    &::after
+        @media (max-width: 576px)
+            right: 15px
+.smallText
+    font-weight: 300
+    font-size: 17px
+    line-height: 150%
+    text-align: center
+    color: #FFFFFF
+.contentWrapper
+    h2:first-of-type
+        margin-top: 0px
+    ul:not([class]), ol:not([class])
+        padding-left: 40px
+        li
+            &::before
+                position: absolute
+                top: 0px
+                left: -40px
+                color: #4AA7BC
+    ul:not([class]) li::before
+        content: "\e914"
+        font-family: 'dreamTravel' !important
+    ol:not([class])
+        counter-reset: section
+        li
+            &::before
+                counter-increment: section
+                content: counters(section,".") " "
+                border: 1px solid #4AA7BC
+                width: 16px
+                height: 16px
+                display: flex
+                justify-content: center
+                align-items: center
+                font-size: 12px
+                line-height: 12px
+    h2
+        margin-bottom: 35px
+.article, .textPage
+    .contentWrapper h2
+        margin-top: 35px
+        margin-bottom: 31px
+.seoText
+    // padding: 140px 0px
+    // @media (max-width: 830px)
+    //     padding: 100px 0px
+    max-width: 780px
+    h3
+        font-weight: 600 !important
+        font-size: 16px !important
+        line-height: 130% !important
+        color: #fff !important
+    h4
+        font-style: normal
+        font-weight: 600 !important
+        font-size: 14px !important
+        color: #fff !important
+        line-height: 100% !important
+    h5
+        font-weight: 600 !important
+        color: #fff !important
+        font-size: 12px !important
+        line-height: 100% !important
+    .toggleBtn
+        border: none

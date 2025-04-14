@@ -1,0 +1,14 @@
+// colors
+$c-white: #fff;
+$c-black: #17171d;
+$c-gray: #28292f;
+$t-gray: #cacaca;
+$c-btn: #4aa7bc;
+// container
+$container-width: 1200px;
+// offset
+$section-offset: 140px;
+
+@mixin sectionPadding() {
+    padding: $section-offset 0px;
+}
