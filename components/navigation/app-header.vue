@@ -1,9 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { NuxtLink } from "#components";
 import path from "@/utils/path";
-import { usePreloaderStore } from "@/stores/preloader";
-const { isUiLocked, lockingPool } = storeToRefs(usePreloaderStore());
+// import { usePreloaderStore } from "@/stores/preloader";
+// const { isUiLocked, lockingPool } = storeToRefs(usePreloaderStore());
 import { getWindowSize } from "@/stores/windowSize";
 const { getSize } = storeToRefs(getWindowSize());
 
@@ -27,63 +27,13 @@ const menuView = computed(() => {
         return NavMenu;
     }
 });
+
+watch(() => route.path, () => {
+  menuOpen.value = false;
+});
+
 </script>
 <!-- <script>
-import { mapGetters, mapActions } from "vuex";
-// import AppLangSwitcher from "./app-langSwitcher.vue";
-// import NavMenuM from "./nav_menu/navMenu-m.vue";
-// import NavMenuT from "./nav_menu/navMenu-t.vue";
-// import NavMenu from "./nav_menu/navMenu.vue";
-export default {
-    data() {
-        return {
-            menuOpen: false,
-        };
-    },
-    components: {
-        AppLangSwitcher,
-        NavMenu,
-        NavMenuT,
-        NavMenuM,
-    },
-    watch: {
-        route() {
-            this.menuOpen = false;
-        },
-        async "$i18n.locale"() {
-            const res = await this.axios.post("/api/menu/get-by-ids", {
-                ids: [1, 2],
-                lang: this.currentLang,
-            });
-            this.getHeaderData(res.data.data.items[1]);
-            this.getFooterMenu(res.data.data.items[2]);
-        },
-    },
-    computed: {
-        menuView() {
-            if (this.getSize === "mobile") {
-                return "nav-menu-m";
-            } else if (this.getSize === "tablet") {
-                return "nav-menu-t";
-            } else {
-                return "nav-menu";
-            }
-        },
-        ...mapGetters(["getSize", "isUiLocked", "headerMenu", "globalSetting"]),
-    },
-    methods: {
-        ...mapActions(["lockUi", "unlockUi", "getHeaderData", "getFooterMenu"]),
-    },
-    async created() {
-        this.lockUi();
-        const res = await this.axios.post("/api/menu/get-by-ids", {
-            ids: [1, 2],
-            lang: this.currentLang,
-        });
-        this.getHeaderData(res.data.data.items[1]);
-        this.getFooterMenu(res.data.data.items[2]);
-        this.unlockUi();
-    },
     mounted() {
         setTimeout(() => {
             const headerHeight = this.$refs.header.clientHeight;

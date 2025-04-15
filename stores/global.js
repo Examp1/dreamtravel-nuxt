@@ -33,7 +33,7 @@ export const useGlobalStore = defineStore("global", {
                 Object.values(data.data.items).forEach((el) => {
                     if (el.name === "Main") {
                         this.headerMenu = el.items;
-                    } else if (el.name === "Main") {
+                    } else if (el.name === "Footer") {
                         this.footerMenu = el.items;
                     }
                 });

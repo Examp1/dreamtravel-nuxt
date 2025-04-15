@@ -1,1 +1,52 @@
-{}
+{
+    "logoText": "Join us on social networks!",
+    "from": "from",
+    "readMore": "Read more",
+    "all": "All",
+    "alternate": "Alternative tours",
+    "alternateHotels": "Alternative hotels",
+    "seeOtherTours": "See other tours",
+    "seeOtherHotels": "View other hotels",
+    "tourAnkerListTitle": "Tour information:",
+    "hotelAnkerListTitle": "Hotel information:",
+    "countryAnkerListTitle": "Country information:",
+    "serviceAnkerListTitle": "Service information:",
+    "seeAlsoTitle": "See also in",
+    "textCopyed": "Text Copyed",
+    "back": "Back",
+    "email": "Email",
+    "subscribe": "Subscribe",
+    "subscribeText1": "Subscribe to the newsletter!",
+    "subscribeText2": "Be the first to receive all the news, get articles that are useful for agents for the selection of tours and hotels and other services for customers who love to travel!",
+    "hotelText1": "Download the hotel presentation",
+    "tourText1": "Download the tour presentation",
+    "tourText2": "Request / calculation form",
+    "fieldErrors": {
+      "email": "Enter Email",
+      "required": "Required field",
+      "minLength": "Minimum number of characters: {length}",
+      "maxLength": "Maximum number of characters: {length}",
+      "selectDate": "Please enter a date",
+      "selectRadio": "Choose an option",
+      "selectTime": "Specify the time"
+    },
+    "requestFormSuccess": "You have successfully submitted a request, our manager will provide you with information on your request in the near future!",
+    "calendarDays": {
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun"
+    },
+    "searchfail": "searchfail",
+    "All_news": "All news",
+    "emailError": "E-mail address must contain {'@'} symbol",
+    "filtration": "Filtration",
+    "clearAll": "Remove all filters",
+    "rec": "We recommend",
+    "tags": "Article tags",
+    "newsTitle": "Read also"
+  }
+  

@@ -1,1 +1,52 @@
-{}
+{
+    "logoText": "Приєднуйся до нас в соц мережах!",
+    "from": "від",
+    "readMore": "Читати більше",
+    "all": "Всі",
+    "alternate": "Альтернативні тури",
+    "alternateHotels": "Alternative готелі",
+    "seeOtherTours": "Переглянути інші готелі",
+    "seeOtherHotels": "Переглянути інші готелі",
+    "tourAnkerListTitle": "Інформація про тур:",
+    "hotelAnkerListTitle": "Інформація про готель:",
+    "countryAnkerListTitle": "Інформація про країну:",
+    "serviceAnkerListTitle": "Інформація про послугу:",
+    "seeAlsoTitle": "Дивись також в",
+    "textCopyed": "Текст скопiйовано",
+    "back": "Назад",
+    "email": "Електронна пошта",
+    "subscribe": "Підписатись",
+    "subscribeText1": "Підпишись на розсилку новин!",
+    "subscribeText2": "Отримуй першим всі новини, отримуй статті, які корисні для агентів для підбору турів та готелів і інших послуг для клієнтів, які обожнюють подорожувати!",
+    "hotelText1": "Завантажити презентацію готеля",
+    "tourText1": "Завантажити презентацію тура",
+    "tourText2": "Форма запиту / розрахунку",
+    "fieldErrors": {
+      "email": "Enter Email",
+      "required": "Required field",
+      "minLength": "Minimum number of characters: {length}",
+      "maxLength": "Maximum number of characters: {length}",
+      "selectDate": "Please enter a date",
+      "selectRadio": "Choose an option",
+      "selectTime": "Specify the time"
+    },
+    "requestFormSuccess": "Ви успішно залишили запит, наш менеджер найближчим часом надасть вам інформацію по вашому запиту!",
+    "calendarDays": {
+      "1": "Пн",
+      "2": "Вт",
+      "3": "Ср",
+      "4": "Чт",
+      "5": "Пт",
+      "6": "Сб",
+      "7": "Нд"
+    },
+    "searchfail": "searchfail",
+    "All_news": "Всі новини",
+    "emailError": "Адреса електронної пошти повинна містити символ {'@'}",
+    "filtration": "Фільтрація",
+    "clearAll": "Видалити всі фільтри",
+    "rec": "Рекомендуємо",
+    "tags": "Теги статті",
+    "newsTitle": "Читайте також"
+  }
+  

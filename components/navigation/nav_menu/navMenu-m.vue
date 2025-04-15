@@ -7,21 +7,6 @@ const { globalSetting } = storeToRefs(useGlobalStore());
 defineProps({
     propData: Object,
 });
-// import { mapGetters } from "vuex";
-// import AccordionItem from "../../common/Accordion-item.vue";
-// import Accordion from "../../common/Accordion.vue";
-// import appLink from "../NuxtLink.vue";
-// export default {
-//     components: { appLink, Accordion, AccordionItem },
-//     props: {
-//         propData: {
-//             type: Object,
-//         },
-//     },
-//     computed: {
-//         ...mapGetters(["globalSetting"]),
-//     },
-// };
 </script>
 
 <template>
