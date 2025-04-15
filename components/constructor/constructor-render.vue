@@ -17,6 +17,9 @@ const asyncComponents = {
     "image-and-text": defineAsyncComponent(
         () => import("~/components/constructor/image-and-text.vue"),
     ),
+    "blocks": defineAsyncComponent(
+        () => import("~/components/constructor/app-blocks.vue"),
+    ),
 };
 </script>
 

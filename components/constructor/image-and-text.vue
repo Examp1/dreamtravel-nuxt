@@ -16,7 +16,7 @@ defineProps({
                 <div class="descr" v-html="propsData.description"></div>
                 <NuxtLink
                     v-if="propsData.button_link && propsData.button_title"
-                    to="https://google-fonts.nuxtjs.org/getting-started/setup/"
+                    :to="propsData.button_link"
                     class="btn"
                     :class="propsData.button_style"
                 >
