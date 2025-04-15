@@ -20,6 +20,9 @@ const asyncComponents = {
     "blocks": defineAsyncComponent(
         () => import("~/components/constructor/app-blocks.vue"),
     ),
+    "selected": defineAsyncComponent(
+        () => import("~/components/constructor/app-showCase.vue"),
+    ),
 };
 </script>
 
@@ -33,6 +36,12 @@ const asyncComponents = {
         <component
             v-for="({ component, content }, idx) in constructor"
             :key="`${component}-${idx}`"
+            :is="asyncComponents[component]"
+            :propsData="content"
+        ></component>
+        <component
+            v-for="({ component, content }, idx) in widgets"
+            :key="`${component}-${idx}-w`"
             :is="asyncComponents[component]"
             :propsData="content"
         ></component>
