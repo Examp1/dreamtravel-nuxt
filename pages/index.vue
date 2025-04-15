@@ -1,12 +1,14 @@
 <script setup>
 import { useNuxtApp } from "#app";
 import appSeoText from "~/components/constructor/app-seo-text.vue";
+import constructorRender from "~/components/constructor/constructor-render.vue";
 const { $httpService } = useNuxtApp();
+const { locale } = useI18n();
 const {
     data: { data },
     status,
 } = await $httpService.post("/api/page/get-by-slug", {
-    lang: "en",
+    lang: locale.value,
     slug: "/",
 });
 
@@ -17,28 +19,6 @@ if (status !== 200) {
         fatal: true,
     });
 }
-// async created() {
-//   this.lockUi();
-//   let test = null;
-//   if (
-//     this.$route.fullPath.split("/").splice(1, 3).join() === "" ||
-//     this.$route.fullPath.split("/").splice(1, 3).join() == "uk"
-//   ) {
-//     test = "/";
-//   } else {
-//     test = this.$route.fullPath.split("/").splice(1, 3).join();
-//   }
-//   const res = await this.axios.post("/api/page/get-by-slug", {
-//     lang: this.currentLang,
-//     slug: test
-//   });
-//   document.title =
-//     res.data.data.translate.meta_title ||
-//     res.data.data.translate.title ||
-//     "Dream Travel";
-//   this.homePageData = res.data.data;
-//   this.unlockUi();
-// }
 </script>
 
 <template>
@@ -55,6 +35,10 @@ if (status !== 200) {
                 <h1>{{ data.translate.title }}</h1>
             </div>
         </section>
+        <constructorRender
+            :constructor="data.constructor"
+            :widgets="data.widgets"
+        />
         <appSeoText
             v-if="data.translate?.seo_text"
             :propsData="data.translate?.seo_text"
