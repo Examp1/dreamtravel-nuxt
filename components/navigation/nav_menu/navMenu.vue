@@ -41,7 +41,6 @@ defineProps({
         font-size: 15px;
         line-height: 100%;
         color: #ffffff;
-        position: relative;
 
         &:not(:last-of-type) {
             margin-right: 28px;

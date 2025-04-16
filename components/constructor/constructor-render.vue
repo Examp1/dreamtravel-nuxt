@@ -23,6 +23,15 @@ const asyncComponents = {
     "selected": defineAsyncComponent(
         () => import("~/components/constructor/app-showCase.vue"),
     ),
+    "calendar": defineAsyncComponent(
+        () => import("~/components/constructor/app-calendar.vue"),
+    ),
+    "full-width-image": defineAsyncComponent(
+        () => import("~/components/constructor/app-full-size-img.vue"),
+    ),
+    "news": defineAsyncComponent(
+        () => import("~/components/constructor/app-news.vue"),
+    ),
 };
 </script>
 

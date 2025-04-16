@@ -8,7 +8,6 @@ defineProps({
 });
 </script>
 <template>
-    {{ propsData.template }}
     <AppTours v-if="propsData.template === 'grid'" :propsData="propsData" />
     <AppChooseUs
         v-else-if="propsData.template === 'custom'"
