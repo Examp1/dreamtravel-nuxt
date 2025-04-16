@@ -1,7 +1,8 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { NuxtLink } from "#components";
-import path from "@/utils/path";
+import useUtils from "@/composables/useUtils.js";
+const { getMediaPath } = useUtils();
 // import { usePreloaderStore } from "@/stores/preloader";
 // const { isUiLocked, lockingPool } = storeToRefs(usePreloaderStore());
 import { getWindowSize } from "@/stores/windowSize";
@@ -15,6 +16,7 @@ import NavMenu from "./nav_menu/navMenu.vue";
 import { useGlobalStore } from "@/stores/global";
 const { globalSetting, headerMenu } = storeToRefs(useGlobalStore());
 const route = useRoute();
+
 
 const menuOpen = ref(false);
 
@@ -68,7 +70,7 @@ watch(() => route.path, () => {
                     class="logo"
                     to="/"
                     ><img
-                        :src="path(globalSetting.site_logo_header)"
+                        :src="getMediaPath(globalSetting.site_logo_header)"
                         alt="logo"
                         class="logo"
                 /></component>

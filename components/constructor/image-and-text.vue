@@ -1,4 +1,6 @@
 <script setup>
+import useUtils from "@/composables/useUtils.js";
+const { getMediaPath } = useUtils();
 defineProps({
     propsData: [Object, Array],
 });
@@ -10,7 +12,7 @@ defineProps({
         :class="{ reverse: propsData.image_position == 'left' }"
     >
         <div class="blockWrapper">
-            <img :src="path(propsData.image)" alt="" />
+            <img :src="getMediaPath(propsData.image)" alt="" />
             <div class="infoWrapper">
                 <p class="title">{{ propsData.title }}</p>
                 <div class="descr" v-html="propsData.description"></div>

@@ -1,4 +1,6 @@
 <script setup>
+import useUtils from "@/composables/useUtils.js";
+const { getMediaPath } = useUtils();
 defineProps({
     propsData: [Object, Array],
 });
@@ -21,7 +23,7 @@ defineProps({
         <NuxtLink :to="propsData.link">
             <!-- <NuxtLink :to="propsData.link"> -->
             <div class="imgWrp">
-                <img :src="path(propsData.image)" alt="" />
+                <img :src="getMediaPath(propsData.image)" alt="" />
             </div>
             <div class="infoBlock">
                 <div class="star">

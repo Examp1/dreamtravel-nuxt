@@ -1,7 +1,12 @@
 <script setup>
+import { NuxtLink } from "#components";
 import { useGlobalStore } from "@/stores/global";
 const { globalSetting, footerMenu } = storeToRefs(useGlobalStore());
-import path from "@/utils/path";
+import useUtils from "@/composables/useUtils.js";
+import visaImg from "~/assets/image/visa.svg";
+import mastercard from "~/assets/image/mastercard-logo.svg";
+
+const { getMediaPath } = useUtils();
 const route = useRoute();
 </script>
 <template>
@@ -11,11 +16,12 @@ const route = useRoute();
             <div class="container df jcsb fContainer">
                 <div class="l">
                     <component
+                        v-if="globalSetting.site_logo_footer"
                         :is="route.name.includes('index') ? 'span' : NuxtLink"
                         to="/"
                     >
                         <img
-                            :src="path(globalSetting.site_logo_footer)"
+                            :src="getMediaPath(globalSetting.site_logo_footer)"
                             alt="logo"
                             class="logo"
                         />
@@ -26,9 +32,13 @@ const route = useRoute();
                             v-for="(item, idx) in globalSetting.links"
                             :key="idx"
                         >
-                            <a :href="item.link" target="_blank">
+                            <a
+                                v-if="item.image"
+                                :href="item.link"
+                                target="_blank"
+                            >
                                 <img
-                                    :src="path(item.image)"
+                                    :src="getMediaPath(item.image)"
                                     alt="socLogo"
                                     class="socialIcon"
                                 />
@@ -56,18 +66,12 @@ const route = useRoute();
                 <ul class="df jcc payment">
                     <li>
                         <a href="#">
-                            <img
-                                src="@/assets/image/visa.svg"
-                                alt="visa-logo"
-                            />
+                            <img :src="visaImg" alt="visa-logo" />
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img
-                                src="@/assets/image/mastercard-logo.svg"
-                                alt="mastercard-logo"
-                            />
+                            <img :src="mastercard" alt="mastercard-logo" />
                         </a>
                     </li>
                 </ul>

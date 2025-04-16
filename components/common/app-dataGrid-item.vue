@@ -1,4 +1,6 @@
 <script setup>
+import useUtils from "@/composables/useUtils.js";
+const { getMediaPath } = useUtils();
 defineProps({
     item: [Object, Array],
 });
@@ -8,7 +10,7 @@ defineProps({
     <NuxtLink
         to="/#"
         class="dataGridItem"
-        :style="`background-image: url(${path(item.image)})`"
+        :style="`background-image: url(${getMediaPath(item.image)})`"
     >
         <p class="title">{{ item.name }}</p>
         <p class="description">

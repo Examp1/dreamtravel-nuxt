@@ -1,5 +1,7 @@
 <script setup>
 import { computed } from "vue";
+import useUtils from "@/composables/useUtils.js";
+const { getMediaPath } = useUtils();
 const props = defineProps({
     propsData: [Object, Array],
 });
@@ -50,13 +52,13 @@ const vItem = computed(() => {
                             </p>
                         </div>
                         <div class="r">
-                            <img :src="path(item.image)" alt="" />
+                            <img :src="getMediaPath(item.image)" alt="" />
                         </div>
                     </div>
                 </div>
                 <div class="vItem item">
                     <div class="l">
-                        <img :src="path(vItem.image)" alt="" />
+                        <img :src="getMediaPath(vItem.image)" alt="" />
                     </div>
                     <div class="r">
                         <p class="number">{{ vItem.name }}</p>
