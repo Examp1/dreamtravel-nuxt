@@ -6,6 +6,8 @@ import appBreadcrumbs from "~/components/navigation/app-breadcrumbs.vue";
 import theMainText from "~/components/common/the-main-text.vue";
 import appTabs from "~/components/navigation/app-tabs.vue";
 import appMainCarousell from "~/components/country/app-main-carousell.vue";
+import appAnkerList from "~/components/navigation/app-anker-list.vue";
+import appSeeAlso from "~/components/constructor/app-see-also.vue";
 
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
@@ -27,7 +29,7 @@ if (status !== 200) {
 }
 
 const filteredConstructor = computed(() => {
-    if ( !data.constructor ) return
+    if (!data.constructor) return;
     const mapedConstrctor = {
         gallery: null,
         otherBlocks: [],
@@ -58,39 +60,21 @@ const filteredConstructor = computed(() => {
             :galleryData="filteredConstructor.gallery.content"
         ></appMainCarousell>
         <div class="container infoZone" v-if="filteredConstructor.otherBlocks">
-            <!-- <anker-list
-                :ankerList="ankerList"
+            <appAnkerList
                 :title="$t('countryAnkerListTitle')"
                 @click="onAnkerClick"
-            ></anker-list> -->
+            ></appAnkerList>
             <div class="contentZone" ref="contentZone">
                 <constructorRender
                     :constructor="filteredConstructor.otherBlocks"
                     :widgets="data.widgets"
                 />
-                <!-- <components
-                    v-for="(item, idx) in constructorFiltered"
-                    :is="item.component"
-                    :key="idx"
-                    :propsData="item.content"
-                    @ankerListCreated="setAnkerList"
-                ></components> -->
             </div>
         </div>
-        <!-- <template v-if="widgetList">
-            <component
-                v-for="(item, idx) in widgetList"
-                :key="idx"
-                :is="item.component"
-                :propsData="item.content"
-            >
-            </component>
-        </template> -->
-
-        <!-- <app-see-also
-            :morfTitle="countryInfo.morf"
-            :tabList="tabsList"
-        ></app-see-also> -->
+        <appSeeAlso
+            :morfTitle="data.translate.morf"
+            :tabList="data.tabs"
+        ></appSeeAlso>
     </div>
 </template>
 

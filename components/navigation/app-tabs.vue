@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
+const route = useRoute()
 const modules = [Navigation];
 
 defineProps({
@@ -34,77 +35,16 @@ defineProps({
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
             <swiper-slide v-for="(item, idx) in tabList" :key="idx">
-                <!--  :to="{
-                        name: 'ContryHotels',
-                        params: {
-                            countryName: $route.params.countryName,
-                            locale: currentLangForLink,
-                        },
-                    }" -->
-                <NuxtLink v-if="item.type === 'hotels'" to="/">{{
+                <NuxtLink v-if="item.type === 'info'" :to="`${route.path}/${item.slug}`">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
-                <!--  :to="{
-                        name: 'CountryTours',
-                        params: {
-                            countryName: $route.params.countryName,
-                            locale: currentLangForLink,
-                        },
-                    }" -->
-                <NuxtLink v-else-if="item.type === 'tours'" to="/">{{
+                <NuxtLink v-else-if="item.type === 'country'" :to="`${route.path}`">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
-                <!--  :to="{
-                        name: 'CountryInfos',
-                        params: {
-                            countryName: $route.params.countryName,
-                            infoPageSlug: item.slug,
-                            locale: currentLangForLink,
-                        },
-                    }" -->
-                <NuxtLink v-else-if="item.type === 'info'" to="/">{{
+                <NuxtLink v-else :to="`${route.path}/${item.type}`">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
-                <template v-else-if="item.type == 'newsCategory'">
-                    <!-- :to="{
-                            name: 'BlogCategory',
-                            params: {
-                                slug: item.slug,
-                                locale: currentLangForLink,
-                            },
-                        }" -->
-                    <NuxtLink v-if="$route.params.slug != item.slug" to="/">
-                        {{ item.tab_name || item.name }}
-                    </NuxtLink>
-                    <!-- :to="{
-                            name: 'Blog',
-                            params: {
-                                locale: currentLangForLink,
-                            },
-                        }" -->
-                    <NuxtLink v-else class="active" to="/">
-                        {{ item.tab_name || item.name }}
-                    </NuxtLink>
-                </template>
-                <!-- :to="{
-                        name: 'Blog',
-                        params: {
-                            locale: currentLangForLink,
-                        },
-                    }" -->
-                <NuxtLink v-else-if="item.type == 'self'" to="/">
-                    {{ item.tab_name || item.name }}
-                </NuxtLink>
-                <!-- :to="{
-                        name: 'Contry',
-                        params: {
-                            countryName: $route.params.countryName,
-                            locale: currentLangForLink,
-                        },
-                    }" -->
-                <NuxtLink v-else to="/">
-                    {{ item.tab_name || item.name }}
-                </NuxtLink>
+               
             </swiper-slide>
         </swiper>
     </div>

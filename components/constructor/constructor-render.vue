@@ -32,6 +32,9 @@ const asyncComponents = {
     "news": defineAsyncComponent(
         () => import("~/components/constructor/app-news.vue"),
     ),
+    "simple-text": defineAsyncComponent(
+        () => import("~/components/constructor/app-simple-text.vue"),
+    ),
 };
 </script>
 

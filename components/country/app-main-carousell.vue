@@ -1,14 +1,13 @@
 <script setup>
 import { ref, computed } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Navigation, Thumbs } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/thumbs";
 import useUtils from "@/composables/useUtils.js";
 const { getMediaPath } = useUtils();
 
-const modules = [Navigation, Thumbs];
+const modules = [Navigation];
 
 const props = defineProps({
     galleryData: {
@@ -17,10 +16,16 @@ const props = defineProps({
     },
 });
 
-const isLightboxOpen = ref(false);
-const thumbsSwiper = ref(null);
-const mainSwiper = ref(null);
+const navSwiperInstance = ref(null);
+const mainSwiperInstance = ref(null);
 const currentSlide = ref(0);
+
+function mainSwiperInit(swiper) {
+    mainSwiperInstance.value = swiper;
+}
+function navSwiperInit(swiper) {
+    navSwiperInstance.value = swiper;
+}
 
 const galleryListSorted = computed(() => {
     if (!props.galleryData?.list) return [];
@@ -33,67 +38,39 @@ const galleryListSorted = computed(() => {
         .sort((a, b) => +a.sort - +b.sort);
 });
 
-// const openLightbox = (idx) => {
-//     isLightboxOpen.value = true;
-//     // Здесь можно добавить логику для открытия конкретного слайда в лайтбоксе
-// };
+function goNext() {
+    mainSwiperInstance.value?.slideNext();
+    navSwiperInstance.value?.slideNext();
+}
+function goPrev() {
+    mainSwiperInstance.value?.slidePrev();
+    navSwiperInstance.value?.slidePrev();
+}
 
-// const closeLightbox = () => {
-//     isLightboxOpen.value = false;
-// };
+function goToSlide(index) {
+    // index — нулевой-based номер слайда
+    mainSwiperInstance.value?.slideTo(index);
+    navSwiperInstance.value?.slideTo(index);
+    currentSlide.value = index;
+}
 
-// const goToSlide = (idx) => {
-//     if (mainSwiper.value) {
-//         mainSwiper.value.swiper.slideTo(idx);
-//     }
-// };
-
-// const slideNext = () => {
-//     if (thumbsSwiper.value) {
-//         thumbsSwiper.value.swiper.slideNext();
-//     }
-// };
-
-// const slidePrev = () => {
-//     if (thumbsSwiper.value) {
-//         thumbsSwiper.value.swiper.slidePrev();
-//     }
-// };
-
-// const onMainSlideChange = (swiper) => {
-//     currentSlide.value = swiper.activeIndex;
-//     if (thumbsSwiper.value) {
-//         thumbsSwiper.value.swiper.slideTo(swiper.activeIndex);
-//     }
-// };
-
-// const onThumbsSlideChange = (swiper) => {
-//     currentSlide.value = swiper.activeIndex;
-//     if (mainSwiper.value) {
-//         mainSwiper.value.swiper.slideTo(swiper.activeIndex);
-//     }
-// };
-
-// const onImageLoad = () => {
-//     if (mainSwiper.value) {
-//         mainSwiper.value.swiper.update();
-//     }
-// };
+function onMainSlideChange(swiper) {
+    // обновляем индекс
+    currentSlide.value = swiper.activeIndex;
+    navSwiperInstance.value?.slideTo(swiper.activeIndex);
+}
 </script>
 
 <template>
+    <!-- TODO внешний вид -->
     <div class="swiper-wrapper">
         <div class="swiper-inner container">
-            <!-- Main Slider -->
             <swiper
-                ref="mainSwiper"
+                @swiper="mainSwiperInit"
                 :modules="modules"
                 :space-between="20"
-                :navigation="{
-                    nextEl: '.main-next',
-                    prevEl: '.main-prev',
-                }"
-                :thumbs="{ swiper: thumbsSwiper }"
+                :centered-slides="true"
+                :slides-per-view="1.4"
                 class="main-swiper"
                 @slide-change="onMainSlideChange"
             >
@@ -110,24 +87,20 @@ const galleryListSorted = computed(() => {
                     />
                 </swiper-slide>
             </swiper>
-
-            <!-- Thumbnail Slider -->
             <div class="nav-swiper-wrapper">
                 <swiper
-                    ref="thumbsSwiper"
+                    @swiper="navSwiperInit"
                     :modules="modules"
                     :space-between="10"
                     :slides-per-view="'auto'"
-                    :watch-slides-progress="true"
-                    :centered-slides="true"
                     class="nav-swiper"
-                    >
-                    <!-- @slide-change="onThumbsSlideChange" -->
-                <!-- @click="goToSlide(idx)" -->
+                >
                     <swiper-slide
                         v-for="(item, idx) in galleryListSorted"
                         :key="'thumb-' + idx"
                         class="thumb-slide"
+                        :class="{ 'slide-active': currentSlide === idx }"
+                        @click="goToSlide(idx)"
                     >
                         <div class="img-wrapper">
                             <img :src="getMediaPath(item.image)" alt="" />
@@ -135,19 +108,14 @@ const galleryListSorted = computed(() => {
                     </swiper-slide>
                 </swiper>
 
-                <!-- <button class="slider-btn prev-btn" @click="slidePrev">
+                <button class="slider-btn prev-btn" @click="goPrev">
                     <i class="ic-arrow-drop"></i>
                 </button>
-                <button class="slider-btn next-btn" @click="slideNext">
+                <button class="slider-btn next-btn" @click="goNext">
                     <i class="ic-arrow-drop"></i>
-                </button> -->
+                </button>
             </div>
         </div>
-
-        <!-- <app-carousell-lightbox
-            v-if="isLightboxOpen"
-            @close="closeLightbox"
-        ></app-carousell-lightbox> -->
     </div>
 </template>
 
@@ -155,8 +123,14 @@ const galleryListSorted = computed(() => {
 .swiper-wrapper {
     overflow-x: hidden;
 }
+:deep(.swiper-inner) {
+    .main-swiper {
+        overflow: visible;
+    }
+}
 
 .main-swiper {
+    margin-top: 45px;
     margin-bottom: 20px;
 
     .main-slide-img {
@@ -176,16 +150,19 @@ const galleryListSorted = computed(() => {
     }
 }
 
-.nav-swiper {
+:deep(.nav-swiper) {
     padding: 0 50px;
-
+    .swiper-wrapper {
+        gap: 10px;
+        justify-content: center;
+    }
     .thumb-slide {
         width: auto;
         opacity: 0.5;
         transition: opacity 0.3s;
         cursor: pointer;
 
-        &.swiper-slide-thumb-active {
+        &.slide-active {
             opacity: 1;
         }
 
