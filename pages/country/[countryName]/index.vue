@@ -62,7 +62,6 @@ const filteredConstructor = computed(() => {
         <div class="container infoZone" v-if="filteredConstructor.otherBlocks">
             <appAnkerList
                 :title="$t('countryAnkerListTitle')"
-                @click="onAnkerClick"
             ></appAnkerList>
             <div class="contentZone" ref="contentZone">
                 <constructorRender

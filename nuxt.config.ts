@@ -9,6 +9,9 @@ export default defineNuxtConfig({
             apiUrl: "https://ohmydream.club",
         },
     },
+    build: {
+        transpile: ["@vuepic/vue-datepicker"],
+    },
     vite: {
         css: {
             preprocessorOptions: {

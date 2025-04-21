@@ -12,15 +12,18 @@ const { fetchGlobalSettings, fetchMenus } = useGlobalStore();
 import { getWindowSize } from "@/stores/windowSize";
 const { initWindowSizeTracking } = getWindowSize();
 
+const route = useRoute()
+
 initWindowSizeTracking();
 fetchGlobalSettings(locale.value);
 fetchMenus(locale.value);
 </script>
 <template>
     <div>
+        <NuxtRouteAnnouncer />
         <appHeader />
         <NuxtRouteAnnouncer />
-        <NuxtPage />
+        <NuxtPage :key="route.fullPath"/>
         <appFooter />
         <appCookieModal />
     </div>

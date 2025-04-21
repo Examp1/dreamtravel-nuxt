@@ -35,6 +35,9 @@ const asyncComponents = {
     "simple-text": defineAsyncComponent(
         () => import("~/components/constructor/app-simple-text.vue"),
     ),
+    "form1": defineAsyncComponent(
+        () => import("~/components/constructor/app-request-form.vue"),
+    ),
 };
 </script>
 

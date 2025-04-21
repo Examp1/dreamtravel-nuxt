@@ -1,0 +1,61 @@
+.inputComponent {
+    position: relative;
+    .wrpimp {
+        height: 50px;
+        width: 100%;
+        background-color: #fff;
+        display: block;
+
+        input {
+            height: 50px;
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 0 16px;
+            box-sizing: border-box;
+            display: block;
+
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            color: #28292f;
+
+            &::placeholder {
+                color: #aba7a7;
+            }
+        }
+
+        &.labelmode {
+            position: relative;
+
+            input {
+                position: absolute;
+                bottom: 8px;
+                left: 16px;
+                padding: 0;
+                background: transparent;
+                height: unset;
+                width: 80%;
+            }
+        }
+
+        &.active {
+            box-shadow: 0 0 0px 2px $c-btn;
+        }
+        .placeholder {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 100%;
+            color: #28292f;
+            top: 8px;
+            left: 16px;
+            position: absolute;
+        }
+    }
+}
+
+.tip {
+    color: #ff2e2e;
+    margin: 2px 0 0;
+}

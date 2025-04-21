@@ -1,10 +1,11 @@
 <script setup>
+import { computed } from "vue";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const route = useRoute()
+const route = useRoute();
 const modules = [Navigation];
 
 defineProps({
@@ -18,6 +19,7 @@ defineProps({
     //     required: true,
     // },
 });
+const basePath = computed(() => route.path.replace(/\/[^/]+$/, ""));
 </script>
 
 <template>
@@ -35,16 +37,19 @@ defineProps({
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
             <swiper-slide v-for="(item, idx) in tabList" :key="idx">
-                <NuxtLink v-if="item.type === 'info'" :to="`${route.path}/${item.slug}`">{{
-                    item.tab_name || item.name
-                }}</NuxtLink>
-                <NuxtLink v-else-if="item.type === 'country'" :to="`${route.path}`">{{
-                    item.tab_name || item.name
-                }}</NuxtLink>
+                <NuxtLink
+                    v-if="item.type === 'info'"
+                    :to="`${route.path}/${item.slug}`"
+                    >{{ item.tab_name || item.name }}</NuxtLink
+                >
+                <NuxtLink
+                    v-else-if="item.type === 'country'"
+                    :to="`${route.path}`"
+                    >{{ item.tab_name || item.name }}</NuxtLink
+                >
                 <NuxtLink v-else :to="`${route.path}/${item.type}`">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
-               
             </swiper-slide>
         </swiper>
     </div>
