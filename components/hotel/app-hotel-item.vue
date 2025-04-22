@@ -1,26 +1,17 @@
 <script setup>
+import { computed } from "vue";
 import useUtils from "@/composables/useUtils.js";
 const { getMediaPath } = useUtils();
+const route = useRoute();
 defineProps({
     propsData: [Object, Array],
 });
+const basePath = computed(() => `/country/${route.params.countryName}/hotels`);
 </script>
 
 <template>
     <div class="hotelItem">
-        <!-- TODO :to="
-                propsData.link
-                    ? propsData.link
-                    : {
-                          name: 'HotelInfo',
-                          params: {
-                              slug: propsData.slug,
-                              locale:
-                                  $i18n.locale == 'en' ? null : $i18n.locale,
-                          },
-                      }
-            " -->
-        <NuxtLink :to="propsData.link">
+        <NuxtLink :to="`${basePath}/${propsData.slug}`">
             <!-- <NuxtLink :to="propsData.link"> -->
             <div class="imgWrp">
                 <img :src="getMediaPath(propsData.image)" alt="" />

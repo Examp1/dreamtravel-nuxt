@@ -38,6 +38,12 @@ const asyncComponents = {
     "form1": defineAsyncComponent(
         () => import("~/components/constructor/app-request-form.vue"),
     ),
+    "tabs": defineAsyncComponent(
+        () => import("~/components/constructor/app-text-tabs.vue"),
+    ),
+    "items-tabs": defineAsyncComponent(
+        () => import("~/components/constructor/app-hotel-rooms.vue"),
+    ),
 };
 </script>
 
