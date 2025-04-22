@@ -19,7 +19,7 @@ defineProps({
     //     required: true,
     // },
 });
-const basePath = computed(() => route.path.replace(/\/[^/]+$/, ""));
+const basePath = computed(() => `/country/${route.params.countryName}`);
 </script>
 
 <template>
@@ -39,15 +39,15 @@ const basePath = computed(() => route.path.replace(/\/[^/]+$/, ""));
             <swiper-slide v-for="(item, idx) in tabList" :key="idx">
                 <NuxtLink
                     v-if="item.type === 'info'"
-                    :to="`${route.path}/${item.slug}`"
+                    :to="`${basePath}/${item.slug}`"
                     >{{ item.tab_name || item.name }}</NuxtLink
                 >
                 <NuxtLink
                     v-else-if="item.type === 'country'"
-                    :to="`${route.path}`"
+                    :to="`${basePath}`"
                     >{{ item.tab_name || item.name }}</NuxtLink
                 >
-                <NuxtLink v-else :to="`${route.path}/${item.type}`">{{
+                <NuxtLink v-else :to="`${basePath}/${item.type}`">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
             </swiper-slide>

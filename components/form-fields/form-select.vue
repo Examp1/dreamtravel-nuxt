@@ -42,7 +42,8 @@ const selectItem = (item) => {
 
             <!-- Выбранный элемент -->
             <div class="selected-item">
-                {{ selectedItem || "Выберите..." }}
+                <span v-if="selectedItem">{{ selectedItem }}</span>
+                <span v-else class="empty">{{ $t("choose") }}</span>
             </div>
 
             <!-- Выпадающий список -->
@@ -66,6 +67,9 @@ const selectItem = (item) => {
 
 <style lang="scss" scoped src="./form-field.scss"></style>
 <style lang="scss" scoped>
+.wrpimp {
+    cursor: pointer;
+}
 .hidden {
     visibility: hidden;
     position: absolute;
@@ -75,6 +79,7 @@ const selectItem = (item) => {
     top: 21px;
     left: 16px;
     font-size: 16px;
+    pointer-events: none;
 }
 .select {
     position: absolute;
@@ -84,6 +89,7 @@ const selectItem = (item) => {
     transition: 0.3s;
     opacity: 0;
     visibility: hidden;
+    z-index: 1;
     &.open {
         opacity: 1;
         visibility: visible;
@@ -103,5 +109,9 @@ const selectItem = (item) => {
             background: #c1dbe1;
         }
     }
+}
+.empty {
+    color: #aba7a7;
+    font-size: 14px;
 }
 </style>

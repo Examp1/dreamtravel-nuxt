@@ -4,10 +4,15 @@
         height: 50px;
         width: 100%;
         background-color: #fff;
-        display: block;
+        display: flex;
+        position: relative;
+        &:has(.placeholder){
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-bottom: 10px;
+        }
 
         input {
-            height: 50px;
             width: 100%;
             border: none;
             outline: none;
