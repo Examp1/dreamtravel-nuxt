@@ -44,6 +44,9 @@ const asyncComponents = {
     "items-tabs": defineAsyncComponent(
         () => import("~/components/constructor/app-hotel-rooms.vue"),
     ),
+    "countries": defineAsyncComponent(
+        () => import("~/components/constructor/app-countries.vue"),
+    ),
 };
 </script>
 
