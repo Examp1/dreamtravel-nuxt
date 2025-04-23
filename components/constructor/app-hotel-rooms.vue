@@ -4,6 +4,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
+import appHotelRoomItem from "../hotel/app-hotel-room-item.vue";
 
 const modules = [Navigation];
 const props = defineProps({
@@ -13,7 +14,7 @@ const props = defineProps({
 const currentHotelIdx = ref(Object.keys(props.propsData.list)[0] || 1);
 
 const currentRooms = computed(() => {
-    const temp = this.propsData.list[this.currentHotelIdx];
+    const temp = props.propsData.list[currentHotelIdx.value];
     return temp;
 });
 
@@ -75,18 +76,21 @@ const currentRooms = computed(() => {
             </swiper-slide>
         </swiper>
         <div class="hotelRoomWrapper">
-            <hotel-room-item
+            <appHotelRoomItem
                 v-for="(item, idx) in currentRooms.items"
                 :key="idx"
                 :roomInfo="item"
-            ></hotel-room-item>
+            ></appHotelRoomItem>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.tabs3 {
+:deep(.tabs3) {
     margin-bottom: 40px;
+    .swiper-slide{
+        width: fit-content;
+    }
 
     .item {
         padding: 12px 20px;

@@ -1,54 +1,40 @@
 <script setup>
+import { useNuxtApp } from "#app";
+import { ref, computed } from "vue";
+import useUtils from "@/composables/useUtils.js";
+const { getMediaPath } = useUtils();
+import { useI18n } from "vue-i18n";
+import appHotelRoomPreview from "./app-hotel-room-preview.vue";
+const { locale } = useI18n();
+const { $httpService } = useNuxtApp();
+
 defineProps({
     roomInfo: [Object, Array],
 });
-const getRoomInfo = (slug) => {
-    this.axios
-        .post("/api/room/get-by-slug", {
-            lang: this.currentLang,
-            slug,
-        })
-        .then((res) => {
-            this.currentRoomInfo = res.data.data;
-            document.querySelector("html").style.overflow = "hidden";
-            this.previewShown = true;
-        });
-};
 
-// import hotelRoomPreview from "./hotel-room-preview.vue";
-// export default {
-//     components: { hotelRoomPreview },
-//     props: {
-//         roomInfo: {
-//             type: [Array, Object],
-//         },
-//     },
-//     data() {
-//         return {
-//             currentRoomInfo: null,
-//             previewShown: false,
-//         };
-//     },
-//     computed: {
-//         langUse() {
-//             return this.$i18n.locale === "en" ? "0" : "1";
-//         },
-//     },
-//     methods: {
-//         getRoomInfo(slug) {
-//             this.axios
-//                 .post("/api/room/get-by-slug", {
-//                     lang: this.currentLang,
-//                     slug,
-//                 })
-//                 .then((res) => {
-//                     this.currentRoomInfo = res.data.data;
-//                     document.querySelector("html").style.overflow = "hidden";
-//                     this.previewShown = true;
-//                 });
-//         },
-//     },
-// };
+const currentRoomInfo = ref(null);
+const previewShown = ref(false);
+
+const langUse = computed(() => {
+    return locale === "en" ? "0" : "1";
+});
+
+const getRoomInfo = async (slug) => {
+    try {
+    const {
+        data: { data },
+    } = await $httpService.post("/api/room/get-by-slug", {
+        lang: locale.value,
+        slug,
+    });
+    console.log(data);
+    currentRoomInfo.value = data;
+    document.querySelector("html").style.overflow = "hidden";
+    previewShown.value = true;
+    } catch (error) {
+        console.error(error);
+    }
+};
 </script>
 
 <template>
@@ -57,8 +43,8 @@ const getRoomInfo = (slug) => {
             <!-- :style="`background-image: url(${path(roomInfo.image)})`" -->
             <img
                 class="bgimg"
-                :src="path(roomInfo.image)"
-                :alt="path(roomInfo.image)"
+                :src="getMediaPath(roomInfo.image)"
+                :alt="getMediaPath(roomInfo.image)"
             />
             <ul>
                 <li>
@@ -78,11 +64,11 @@ const getRoomInfo = (slug) => {
                 <li>{{ roomInfo.name }}</li>
             </ul>
         </div>
-        <hotel-room-preview
+        <appHotelRoomPreview
             v-if="previewShown"
             :roomInfo="currentRoomInfo"
             @close="previewShown = false"
-        ></hotel-room-preview>
+        ></appHotelRoomPreview>
     </div>
 </template>
 
