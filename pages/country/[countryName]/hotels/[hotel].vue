@@ -4,7 +4,6 @@ import { computed } from "vue";
 import constructorRender from "~/components/constructor/constructor-render.vue";
 import appBreadcrumbs from "~/components/navigation/app-breadcrumbs.vue";
 import theMainText from "~/components/common/the-main-text.vue";
-import appTabs from "~/components/navigation/app-tabs.vue";
 import appMainCarousell from "~/components/country/app-main-carousell.vue";
 import appAnkerList from "~/components/navigation/app-anker-list.vue";
 import appSeeAlso from "~/components/constructor/app-see-also.vue";
@@ -43,6 +42,23 @@ const filteredConstructor = computed(() => {
     });
     return mapedConstrctor;
 });
+
+const attributeFiltered = computed(() => {
+    let temp = [],
+        keys = [];
+    // data.model.hotel_attributes
+    data.model.hotel_attributes.forEach((el) => {
+        let found = false;
+        keys.forEach((key) => {
+            if (el.attribute_id == key) found = true;
+        });
+        if (!found) {
+            temp.push(el);
+            keys.push(el.attribute_id);
+        }
+    });
+    return temp;
+});
 </script>
 
 <template>
@@ -53,16 +69,31 @@ const filteredConstructor = computed(() => {
                 :title="data.translate.name"
                 :descr="data.translate.description"
             ></theMainText>
-            <appTabs class="mt" :tabList="data.tabs"></appTabs>
+            <ul class="attrWrp">
+                <li
+                    class="attrItem"
+                    v-for="(item, idx) in attributeFiltered"
+                    :key="idx"
+                >
+                    <i class="icon" :class="item.attr_icon"></i>
+                    {{ item.value }}
+                </li>
+            </ul>
+            <ul class="btnWrp">
+                <li>
+                    <a :href="`${$route.path}/pdf`" target="_blank">
+                        {{ $t("hotelText1") }}
+                    </a>
+                </li>
+                <li @click="scrollReqForm">{{ $t("tourText2") }}</li>
+            </ul>
         </div>
         <appMainCarousell
             v-if="filteredConstructor.gallery.content.list"
             :galleryData="filteredConstructor.gallery.content"
         ></appMainCarousell>
         <div class="container infoZone" v-if="filteredConstructor.otherBlocks">
-            <appAnkerList
-                :title="$t('countryAnkerListTitle')"
-            ></appAnkerList>
+            <appAnkerList :title="$t('countryAnkerListTitle')"></appAnkerList>
             <div class="contentZone" ref="contentZone">
                 <constructorRender
                     :constructor="filteredConstructor.otherBlocks"
@@ -77,86 +108,111 @@ const filteredConstructor = computed(() => {
     </div>
 </template>
 
-<!-- <script>
-  import AppTabs from "../components/common/app-tabs.vue";
-  //
-  import AppCountryCalendar from "../components/country/app-country-calendar.vue";
-  import AppSeeAlso from "../components/country/app-see-also.vue";
-  import AppListing from "../components/text-components/app-listing.vue";
-  import SimpleText from "../components/text-components/app-simple-text.vue";
-  import { mapActions, mapGetters } from "vuex";
-  import AppMainCarousell from "../components/common/app-MainCarousell.vue";
-  
-  import accordionMixin from "@/textAccordion";
-  import TheMainText from "../components/common/the-main-text.vue";
-  import AnkerList from "../components/navigation/anker-list.vue";
-  import AppBreadcrumbs from "../components/common/app-breadcrumbs.vue";
-  
-  export default {
-    // mixins: [accordionMixin],
-    data() {
-      return {
-        countryInfo: null,
-        constructorData: null,
-        tabsList: null,
-        widgetList: null,
-        ankerList: null,
-        breadcrumbsList: null
-      };
-    },
-    methods: {
-      ...mapActions(["lockUi", "unlockUi"]),
-      setAnkerList(ankerList) {
-        this.ankerList = ankerList;
-      }
-    },
-    computed: {
-      ...mapGetters(["isUiLocked"]),
-      galleryData() {
-        return this.constructorData[0];
-      },
-      constructorFiltered() {
-        const temp = [];
-        this.constructorData.forEach((el) => {
-          if (el.top != 1) {
-            temp.push(el);
-          }
-        });
-        return temp;
-      }
-    },
-    async created() {
-      this.lockUi();
-      const res = await this.axios.post("/api/country/get-by-slug", {
-        slug: this.$route.params.countryName,
-        lang: this.currentLang
-      });
-      this.tabsList = res.data.data.tabs;
-      this.countryInfo = res.data.data.translate;
-      this.constructorData = res.data.data.constructor;
-      this.widgetList = res.data.data.widgets;
-      this.breadcrumbsList = res.data.data.breadcrumbs;
-      document.title =
-        res.data.data.translate.meta_title ||
-        res.data.data.translate.name ||
-        "Dream Travel";
-      setTimeout(() => {
-        this.initToggleSlideBtn(this.$refs.contentZone, false); // from mixin
-      }, 500);
-      this.unlockUi();
-    },
-  };
-  </script> -->
-
 <style lang="scss" scoped>
-.descr {
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 150%;
-    text-align: center;
-    color: #ffffff;
-    max-width: 586px;
-    margin: 0 auto;
-    margin-bottom: 70px;
+h1,
+h1 + .descr {
+    margin-bottom: 17px;
+}
+
+.hotelListWrp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    // @include sectionPadding;
+    // @media (max-width: 830px) {
+    //   padding: 100px 0px;
+    // }
+}
+
+.hotelList {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 77px;
+
+    @media (max-width: 1024px) {
+        justify-content: center;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 830px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 576px) {
+        flex-direction: column;
+        grid-template-columns: repeat(1, 1fr);
+        margin-top: 0px;
+    }
+}
+
+.attrWrp {
+    margin-top: 18px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 576px) {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 15px;
+        text-align: center;
+
+        .attrItem {
+            margin-left: 0px;
+        }
+    }
+}
+
+.attrItem {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    margin-left: 30px;
+
+    i {
+        margin-left: 11px;
+        color: inherit;
+    }
+}
+
+.btnWrp {
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 576px) {
+        flex-direction: column;
+
+        li {
+            margin-left: 0px !important;
+            margin-top: 10px;
+            text-align: center !important;
+        }
+    }
+
+    li {
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 120%;
+        text-align: right;
+        color: $c-btn;
+        padding: 20px;
+        border: 1px solid $c-btn;
+
+        &:last-of-type {
+            margin-left: 25px;
+            color: #fff;
+            background-color: $c-btn;
+        }
+    }
+}
+
+.btn i {
+    font-size: 12px;
+    margin-left: 12px;
 }
 </style>
