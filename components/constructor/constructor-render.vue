@@ -47,11 +47,17 @@ const asyncComponents = {
     "countries": defineAsyncComponent(
         () => import("~/components/constructor/app-countries.vue"),
     ),
+    "quotes": defineAsyncComponent(
+        () => import("~/components/constructor/app-quotes.vue"),
+    ),
+    "gallery": defineAsyncComponent(
+        () => import("~/components/constructor/app-gallery-with-lightbox.vue"),
+    ),
 };
 </script>
 
 <template>
-    <div  class="constructor-container">
+    <section  class="constructor-container">
         <!-- <section
             v-for="({ component, visible, content }, idx) in constructor"
             :key="`${component}-${idx}`"
@@ -70,7 +76,7 @@ const asyncComponents = {
             :propsData="content"
         ></component>
         <!-- </section> -->
-    </div>
+    </section>
 </template>
 
 <style lang="scss" scoped></style>

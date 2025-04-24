@@ -23,13 +23,6 @@ if (status !== 200) {
 }
 </script>
 <!-- <script>
-import AppNews from "../components/app-news.vue";
-import AppListItem from "../components/common/app-listItem.vue";
-import appDataGrid from "../components/app-dataGrid.vue";
-import { mapActions, mapGetters } from "vuex";
-import AppTabsFilter from "../components/common/app-tabs_filter.vue";
-import AppCountries from "../components/katalog/app-countries.vue";
-import TheMainText from "../components/common/the-main-text.vue";
 export default {
     components: {
         "image-and-text": AppListItem,
@@ -81,19 +74,15 @@ export default {
 </script> -->
 
 <template>
-    <div class="chooseCountry" v-if="!isUiLocked">
+    <div class="chooseCountry">
         <div class="container textContainer">
             <theMainText
                 :title="data.translate.title"
                 :descr="data.translate.description"
             ></theMainText>
         </div>
-        <constructorRender
-            :widgets="data.widgets"
-        />
-        <constructorRender
-            :constructor="data.constructor"
-        />
+        <constructorRender :widgets="data.widgets" />
+        <constructorRender :constructor="data.constructor" />
     </div>
 </template>
 
