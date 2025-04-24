@@ -47,6 +47,12 @@ const basePath = computed(() => `/country/${route.params.countryName}`);
                     :to="`${basePath}`"
                     >{{ item.tab_name || item.name }}</NuxtLink
                 >
+                <NuxtLink v-else-if="!item.type" :to="item.url">{{
+                    item.tab_name || item.name
+                }}</NuxtLink>
+                <NuxtLink v-else-if="item.type === 'news'" to="/news">{{
+                    item.tab_name || item.name
+                }}</NuxtLink>
                 <NuxtLink v-else :to="`${basePath}/${item.type}`">{{
                     item.tab_name || item.name
                 }}</NuxtLink>

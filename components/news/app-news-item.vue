@@ -38,14 +38,14 @@ const tagName = computed(() => {
 </script>
 
 <template>
-    <router-link v-if="link" :to="cardUrl" class="newItem">
-        <router-link :to="tagUrl" class="tag">{{ tagName }}</router-link>
+    <NuxtLink v-if="link" :to="cardUrl" class="newItem">
+        <NuxtLink v-if="tagName" :to="tagUrl" class="tag">{{ tagName }}</NuxtLink>
         <p class="title">
             {{ data.name }}
         </p>
-        <p class="descr" v-html="data.text"></p>
+        <div class="descr" v-html="data.text"></div>
         <p class="date">{{ data.public_date }}</p>
-    </router-link>
+    </NuxtLink>
 </template>
 
 <style lang="scss" scoped>

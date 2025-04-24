@@ -18,7 +18,7 @@ const nextPage = computed(() => {
 </script>
 
 <template>
-    <ul class="pagination">
+    <ul v-if="pagination.links" class="pagination">
         <template v-for="(item, index) in pagination.links">
             <NuxtLink
                 v-if="item.label.includes('Previous')"
