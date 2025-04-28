@@ -1,34 +1,20 @@
 <script setup>
 import { useI18n } from "vue-i18n";
-import { useGlobalStore } from "@/stores/global";
 const { locale, locales, setLocale } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
 
-const globalStore = useGlobalStore();
 const lolizedValue = {
     uk: "Укр",
     en: "Eng",
 };
-
-// Обработчик смены языка
-const handleLanguageChange = async () => {
-    await globalStore.fetchMenus(locale.value);
-    await globalStore.fetchGlobalSettings(locale.value);
-};
 </script>
-
+!
 <template>
     <ul class="lang-switcher df">
-        <!-- <li :class="{ active: locale === 'en' }">Eng</li>
-        <span></span>
-        <li :class="{ active: locale === 'uk' }">Укр</li> -->
-        <li
-            v-for="lang in locales"
-            :class="{ active: locale === lang.code }"
-        >
+        <li v-for="lang in locales" :class="{ active: locale === lang.code }">
             <NuxtLink
                 :key="lang.code"
-                :to="lang.code"
-                @click.prevent="setLocale(lang.code)"
+                :to="switchLocalePath(lang.code)"
             >
                 {{ lolizedValue[lang.code] }}
             </NuxtLink>

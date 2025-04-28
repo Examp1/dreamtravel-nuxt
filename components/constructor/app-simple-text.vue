@@ -81,7 +81,6 @@ export default {
             ref="textWrapper"
             class="contentWrapper"
             v-html="propsData.description"
-            v-if="!isUiLocked"
         ></div>
         <component
             v-if="propsData.button_link && propsData.button_title"

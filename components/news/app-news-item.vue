@@ -13,16 +13,6 @@ const props = defineProps({
     },
 });
 
-const route = useRoute();
-
-const isBlogRoute = computed(() => {
-    return ["Blog", "Article", "BlogCategory", "TagsPage"].includes(route.name);
-});
-
-const cardUrl = computed(() => {
-    return isBlogRoute.value ? props.link : `/${props.link}`;
-});
-
 const tagUrl = computed(() => {
     const url = props.data.category
         ? props.data.category.url
@@ -38,7 +28,7 @@ const tagName = computed(() => {
 </script>
 
 <template>
-    <NuxtLink v-if="link" :to="cardUrl" class="newItem">
+    <NuxtLink v-if="link" :to="props.link" class="newItem">
         <NuxtLink v-if="tagName" :to="tagUrl" class="tag">{{ tagName }}</NuxtLink>
         <p class="title">
             {{ data.name }}

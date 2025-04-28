@@ -129,7 +129,11 @@ if (status !== 200) {
         </div>
         <div class="container infoZone" v-if="data.constructor.length">
             <appAnkerList :title="$t('serviceAnkerListTitle')"></appAnkerList>
-            <div class="contentZone" ref="contentZone">
+            <div
+                class="contentZone"
+                v-if="data.constructor.length"
+                ref="contentZone"
+            >
                 <constructorRender :constructor="data.constructor" />
             </div>
         </div>
