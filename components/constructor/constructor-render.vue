@@ -53,6 +53,9 @@ const asyncComponents = {
     "gallery": defineAsyncComponent(
         () => import("~/components/constructor/app-gallery-with-lightbox.vue"),
     ),
+    "sform": defineAsyncComponent(
+        () => import("~/components/constructor/app-dinamic-form.vue"),
+    ),
 };
 </script>
 

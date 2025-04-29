@@ -8,7 +8,6 @@ import appTabs from "~/components/navigation/app-tabs.vue";
 import appMainCarousell from "~/components/country/app-main-carousell.vue";
 import appAnkerList from "~/components/navigation/app-anker-list.vue";
 import appSeeAlso from "~/components/constructor/app-see-also.vue";
-
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
 const route = useRoute();
