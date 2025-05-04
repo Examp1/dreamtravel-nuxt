@@ -1,9 +1,15 @@
 <script setup>
 import { vMaska } from "maska/vue";
-import { Field, ErrorMessage } from "vee-validate";
+import { useField } from "vee-validate";
+import { createFiedlValidationRules } from "~/composables/createFieldValidationSheme";
 
-defineProps({
+const props = defineProps({
     propsData: Object,
+});
+
+const fieldRules = createFiedlValidationRules(props.propsData);
+const { value, errorMessage } = useField(props.propsData.name, fieldRules, {
+    initialValue: "",
 });
 </script>
 
@@ -13,7 +19,8 @@ defineProps({
             <span class="placeholder" v-if="propsData.title">{{
                 propsData.title
             }}</span>
-            <Field
+            <input
+                v-model="value"
                 :name="propsData.name"
                 as="input"
                 type="text"
@@ -23,9 +30,7 @@ defineProps({
             />
         </label>
 
-        <ErrorMessage :name="propsData.name" v-slot="{ message }">
-            <span class="tip">{{ message }}</span>
-        </ErrorMessage>
+        <span class="tip">{{ errorMessage }}</span>
     </div>
 </template>
 

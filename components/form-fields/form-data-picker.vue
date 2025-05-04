@@ -1,8 +1,9 @@
 <script setup>
 import { ref, watch } from "vue";
-import { useField, ErrorMessage } from "vee-validate";
+import { useField } from "vee-validate";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import { createFiedlValidationRules } from "~/composables/createFieldValidationSheme";
 
 const props = defineProps({
     propsData: Object,
@@ -34,10 +35,15 @@ const formatDate = (date) => {
     return `${day} ${month}, ${dayName}`;
 };
 
-const { handleChange } = useField(props.propsData.name);
+
+const fieldRules = createFiedlValidationRules(props.propsData, 'date');
+const { errorMessage, handleChange } = useField(props.propsData.name, fieldRules, {
+    initialValue: "",
+});
+// const { handleChange } = useField(props.propsData.name);
 
 watch(date, () => {
-    handleChange(date.value)
+    handleChange(date.value);
 });
 </script>
 
@@ -64,9 +70,8 @@ watch(date, () => {
                 ></VueDatePicker>
             </label>
         </div>
-        <ErrorMessage :name="propsData.name" v-slot="{ message }">
-            <span class="tip">{{ message }}</span>
-        </ErrorMessage>
+
+        <span class="tip">{{ errorMessage }}</span>
     </div>
 </template>
 

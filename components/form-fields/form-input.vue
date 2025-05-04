@@ -1,8 +1,14 @@
 <script setup>
-import { Field, ErrorMessage } from "vee-validate";
+import { useField } from "vee-validate";
+import { createFiedlValidationRules } from "~/composables/createFieldValidationSheme";
 
 const props = defineProps({
     propsData: Object,
+});
+
+const fieldRules = createFiedlValidationRules(props.propsData);
+const { value, errorMessage } = useField(props.propsData.name, fieldRules, {
+    initialValue: "",
 });
 </script>
 
@@ -12,19 +18,16 @@ const props = defineProps({
             <span class="placeholder" v-if="propsData.title">{{
                 propsData.title
             }}</span>
-            <Field
+            <input
+                v-model="value"
                 :name="propsData.name"
                 type="text"
                 :placeholder="propsData.placeholder"
                 class="input"
             />
         </label>
-
-        <ErrorMessage :name="propsData.name" v-slot="{ message }">
-            <span class="tip">{{ message }}</span>
-        </ErrorMessage>
+        <span class="tip">{{ errorMessage }}</span>
     </div>
 </template>
 
 <style lang="scss" scoped src="./form-field.scss"></style>
-

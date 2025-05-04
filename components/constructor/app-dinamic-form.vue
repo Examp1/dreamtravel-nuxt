@@ -1,24 +1,22 @@
 <script setup>
 import { useNuxtApp } from "#app";
 const { $httpService } = useNuxtApp();
-import { Form } from "vee-validate";
+import { useForm } from "vee-validate";
 import { computed, ref, onMounted } from "vue";
-import { toTypedSchema } from "@vee-validate/zod";
-import * as zod from "zod";
 import useUtils from "@/composables/useUtils.js";
 import formInput from "../form-fields/form-input.vue";
 import formLabel from "../form-fields/form-label.vue";
-import formEmail from "../form-fields/form-email.vue";
+// import formEmail from "../form-fields/form-email.vue";
 import formSelect from "../form-fields/form-select.vue";
 import formDataPicker from "../form-fields/form-data-picker.vue";
 import formTextArea from "../form-fields/form-text-area.vue";
-import formPhone from "../form-fields/form-phone.vue";
+// import formPhone from "../form-fields/form-phone.vue";
 import formTimePicker from "../form-fields/form-time-picker.vue";
 import FormCheckboxGroup from "../form-fields/form-checkbox-group.vue";
 
 const route = useRoute();
 const isLoaded = ref(false);
-
+const { validateField, handleSubmit } = useForm();
 const { getMediaPath } = useUtils();
 
 const props = defineProps({
@@ -26,28 +24,10 @@ const props = defineProps({
 });
 
 const bg = computed(() => {
-    const path = getMediaPath(props.propsData.block_background);
+    const path = getMediaPath(props.propsData.form_image);
     return path ? { backgroundImage: `url('${path}')` } : null;
 });
-
-const requestForm = useTemplateRef("requestForm");
 const isSuccess = ref(false);
-
-const filteredFields = computed(() => {
-    const temp = {
-        fieldWithRules: [],
-        fieldWithoutRules: [],
-    };
-    props.propsData.form_data.forEach((field) => {
-        console.log(field);
-        if ("rules" in field) {
-            temp.fieldWithRules.push(field);
-        } else {
-            temp.fieldWithoutRules.push(field);
-        }
-    });
-    return temp;
-});
 
 const getComponentName = (name) => {
     switch (name) {
@@ -57,107 +37,32 @@ const getComponentName = (name) => {
         //     return formPhone;
         // case "email":
         //     return formEmail;
-        case "time":
+        case "form-time-picker":
             return formTimePicker;
-        case "select":
+        case "form-select":
             return formSelect;
-        case "list":
+        case "form-checkbox-group":
             return FormCheckboxGroup;
         case "form-text":
             return formLabel;
         case "form-editor":
             return formTextArea;
-        case "date":
+        case "form-data-picker":
             return formDataPicker;
         default:
             return "";
     }
 };
 
-const createDynamicSchema = (fields) => {
-    const schemaObject = {};
-
-    fields.forEach((field) => {
-        if (!field.rules) return;
-
-        let validator;
-
-        switch (field.type) {
-            case "form-select":
-                validator = zod.string();
-                break;
-
-            case "form-input":
-                validator = zod.string();
-                break;
-            case "form-date-picker":
-                validator = zod.coerce
-                    .date()
-                    .transform((val) => val.toISOString());
-                break;
-            case "form-editor":
-                validator = zod.string();
-                break;
-
-            default:
-                validator = zod.string();
-        }
-
-        if (!field.rules.required) {
-            validator = validator.optional();
-        }
-
-        if (validator._def.typeName === "ZodString") {
-            if (field.rules.required) {
-                validator = validator.min(1, {
-                    message: field.messages?.required || "Required field",
-                });
-            }
-
-            if (field.rules.email) {
-                validator = validator.email({
-                    message: field.messages?.email || "Invalid email",
-                });
-            }
-
-            if (field.rules.min > 1) {
-                validator = validator.min(field.rules.min, {
-                    message:
-                        field.messages?.min ||
-                        `Minimum ${field.rules.min} chars`,
-                });
-            }
-
-            if (field.rules.max) {
-                validator = validator.max(field.rules.max, {
-                    message:
-                        field.messages?.max ||
-                        `Maximum ${field.rules.max} chars`,
-                });
-            }
-        }
-
-        schemaObject[field.name] = validator;
-    });
-
-    return toTypedSchema(zod.object(schemaObject));
-};
-
-const formSchema = computed(() =>
-    createDynamicSchema(props.propsData.form_data),
-);
-
-const onSubmit = async () => {
-    const FormValues = { ...requestForm.value.values };
-    console.log(FormValues);
-    const { data, status } = await $httpService.post("/api/add-notice", {
+const onSubmit = handleSubmit((values) => {
+    const { data, status } = $httpService.post("/api/add-notice", {
         page_title: route.path,
-        ...FormValues,
+        ...values,
     });
     if (status === 200) {
         isSuccess.value = true;
     }
-};
+});
 
 onMounted(() => {
     isLoaded.value = true;
@@ -168,11 +73,7 @@ onMounted(() => {
     <section class="specContainer">
         <div class="bgWrp" :style="bg">
             <div v-if="!isSuccess" class="formWrp" ref="formBody">
-                <Form
-                    :validation-schema="formSchema"
-                    @submit="onSubmit"
-                    ref="requestForm"
-                >
+                <form @submit="onSubmit" ref="requestForm">
                     <component
                         v-for="(field, idx) in propsData.form_data"
                         :key="field.name + '-' + idx"
@@ -185,10 +86,10 @@ onMounted(() => {
                             type="submit"
                             :class="{ disabled: !isLoaded }"
                         >
-                            {{ propsData.button_title }}
+                            {{ propsData.form_btn_name }}
                         </button>
                     </div>
-                </Form>
+                </form>
             </div>
             <div v-else class="formWrp">
                 <div class="success" key="k2">

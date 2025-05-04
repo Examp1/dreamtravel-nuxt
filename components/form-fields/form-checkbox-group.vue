@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useField, ErrorMessage } from "vee-validate";
+import { ref, watch } from "vue";
+import { useField } from "vee-validate";
+import { createFiedlValidationRules } from "~/composables/createFieldValidationSheme";
 
 const props = defineProps({
     propsData: {
@@ -9,8 +10,14 @@ const props = defineProps({
         validator: (data) => "name" in data && "list" in data,
     },
 });
-
-const { value: fieldValue, handleChange } = useField(props.propsData.name);
+const fieldRules = createFiedlValidationRules(props.propsData);
+const {
+    value: fieldValue,
+    handleChange,
+    errorMessage,
+} = useField(props.propsData.name, fieldRules, {
+    initialValue: "",
+});
 
 const checkGroup = ref(fieldValue.value ? fieldValue.value.split(",") : []);
 
@@ -37,7 +44,7 @@ const setCheckBoxValue = (checkBoxValue) => {
     <div class="checkGroup">
         <div
             class="item"
-            v-for="({ item }, index) in propsData.list"
+            v-for="(item, index) in propsData.list || propsData.options"
             :key="index"
             :class="{ active: checkGroup.includes(item) }"
             @click="setCheckBoxValue(item)"
@@ -46,12 +53,15 @@ const setCheckBoxValue = (checkBoxValue) => {
             {{ item }}
         </div>
     </div>
-    <ErrorMessage :name="propsData.name" v-slot="{ message }">
-        <span class="tip">{{ message }}</span>
-    </ErrorMessage>
+
+    <span class="tip">{{ errorMessage }}</span>
 </template>
 
 <style lang="scss" scoped>
+.tip {
+    color: #ff2e2e;
+    margin: 2px 0 0;
+}
 .checkGroup {
     grid-column: 1 / -1;
     margin: 25px 0;

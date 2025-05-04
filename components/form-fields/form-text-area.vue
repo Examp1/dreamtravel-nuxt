@@ -1,52 +1,31 @@
-<!-- <script>
-import defaultinput from "./DefaultInputMixin.js";
-export default {
-    name: "TextArea",
-    mixins: [defaultinput],
-    props: {
-        description: {
-            type: String,
-            default: "",
-        },
-    },
-};
-</script> -->
-
 <script setup>
-import { Field, ErrorMessage } from "vee-validate";
+import { useField } from "vee-validate";
+import { createFiedlValidationRules } from "~/composables/createFieldValidationSheme";
 
 const props = defineProps({
     propsData: Object,
+});
+
+const fieldRules = createFiedlValidationRules(props.propsData);
+const { value, errorMessage } = useField(props.propsData.name, fieldRules, {
+    initialValue: "",
 });
 </script>
 
 <template>
     <div class="tawrp">
         <label class="inputComponent">
-            <Field
+            <textarea
+                v-model="value"
                 :name="propsData.name"
                 type="text"
                 :placeholder="propsData.placeholder"
                 as="textarea"
             />
-            <!-- <textarea
-                :id="`input${_uid}`"
-                :type="itype ? itype : 'text'"
-                v-model.trim="value"
-                @keyup="onKeyUp"
-                :name="propname"
-                @focus="onFocus"
-                @blur="onBlur"
-                :placeholder="placeholder"
-                :class="{ active: isFocus }"
-            ></textarea> -->
-            <!-- <span class="labeltxt" :class="{ active: value != '' || isFocus }">{{
-                  placeholder
-              }}</span> -->
         </label>
-        <ErrorMessage :name="propsData.name" v-slot="{ message }">
-            <span class="tip">{{ message }}</span>
-        </ErrorMessage>
+
+        <span class="tip">{{ errorMessage }}</span>
+
         <span class="desc">{{ propsData.description }}</span>
     </div>
 </template>

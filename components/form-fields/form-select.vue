@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { ErrorMessage, useField } from "vee-validate";
+import { createFiedlValidationRules } from "~/composables/createFieldValidationSheme";
+import { useField } from "vee-validate";
 import { useClickOutside } from "@/composables/useClickOutside";
 
 const props = defineProps({
@@ -17,14 +18,21 @@ const isSelectOpen = ref(false);
 const wrapperRef = ref(null);
 
 // Подключаем поле к vee-validate
-const { value: selectedItem, handleChange } = useField(props.propsData.name);
+const fieldRules = createFiedlValidationRules(props.propsData);
+const { value: selectedItem, errorMessage, handleChange  } = useField(
+    props.propsData.name,
+    fieldRules,
+    {
+        initialValue: "",
+    },
+);
 
 useClickOutside(wrapperRef, () => {
     isSelectOpen.value = false;
 });
 
 const selectItem = (item) => {
-    handleChange(item.item); // Используем handleChange из useField
+    handleChange(item.item || item);
     isSelectOpen.value = false;
 };
 </script>
@@ -49,19 +57,17 @@ const selectItem = (item) => {
             <!-- Выпадающий список -->
             <div class="select" :class="{ open: isSelectOpen }">
                 <div
-                    v-for="(opt, index) in propsData.list"
+                    v-for="(opt, index) in propsData.list || propsData.options"
                     :key="index"
                     class="option"
                     @click="selectItem(opt)"
                 >
-                    {{ opt.item }}
+                    {{ opt.item || opt }}
                 </div>
             </div>
         </label>
 
-        <ErrorMessage :name="propsData.name" v-slot="{ message }">
-            <span class="tip">{{ message }}</span>
-        </ErrorMessage>
+        <span class="tip">{{ errorMessage }}</span>
     </div>
 </template>
 
