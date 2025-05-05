@@ -55,13 +55,11 @@ const getComponentName = (name) => {
 };
 
 const onSubmit = handleSubmit((values) => {
-    const { data, status } = $httpService.post("/api/add-notice", {
-        page_title: route.path,
+    $httpService.post("/api/request/send", {
+        form_id: props.propsData.form_id,
         ...values,
     });
-    if (status === 200) {
-        isSuccess.value = true;
-    }
+    isSuccess.value = true;
 });
 
 onMounted(() => {
