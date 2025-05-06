@@ -6,6 +6,7 @@ import useUtils from "@/composables/useUtils.js";
 import theShareBar from "~/components/common/the-share-bar.vue";
 import theArticleTags from "~/components/common/the-article-tags.vue";
 import constructorRender from "~/components/constructor/constructor-render.vue";
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const { getMediaPath } = useUtils();
 const { $httpService } = useNuxtApp();
 const route = useRoute();
@@ -17,6 +18,10 @@ const {
     lang: locale.value,
     slug: route.params.article,
 });
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

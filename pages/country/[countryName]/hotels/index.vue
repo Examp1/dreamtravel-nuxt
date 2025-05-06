@@ -9,6 +9,7 @@ import appHotelItem from "~/components/hotel/app-hotel-item.vue";
 import appTourFilter from "~/components/tour/app-tour-filter.vue";
 import appSeoText from "~/components/constructor/app-seo-text.vue";
 import appPagination from "~/components/navigation/app-pagination.vue";
+import { useMetaHead } from "~/composables/useMetaHead.js";
 
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
@@ -24,6 +25,10 @@ const {
     slug: route.params.countryName,
     page: currentPage.value,
 });
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

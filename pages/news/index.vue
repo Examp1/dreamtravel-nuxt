@@ -9,6 +9,7 @@ import { useGlobalStore } from "@/stores/global";
 const { globalSetting } = storeToRefs(useGlobalStore());
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const route = useRoute();
 const currentPage = ref(route.query.page || 1);
 
@@ -19,6 +20,11 @@ const {
     lang: locale.value,
     page: currentPage.value,
 });
+
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

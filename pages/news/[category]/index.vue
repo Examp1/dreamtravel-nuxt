@@ -7,6 +7,7 @@ import appPagination from "~/components/navigation/app-pagination.vue";
 import theSubscribeForm from "~/components/common/the-subscribe-form.vue";
 import { useGlobalStore } from "@/stores/global";
 const { globalSetting } = storeToRefs(useGlobalStore());
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
 const route = useRoute();
@@ -20,6 +21,11 @@ const {
     slug: route.params.category,
     page: currentPage.value,
 });
+
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

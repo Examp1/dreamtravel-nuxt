@@ -5,6 +5,7 @@ import constructorRender from "~/components/constructor/constructor-render.vue";
 import appAnkerList from "~/components/navigation/app-anker-list.vue";
 import theMainText from "~/components/common/the-main-text.vue";
 import appSeeAlso from "~/components/constructor/app-see-also.vue";
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
 
 const { locale } = useI18n();
@@ -17,6 +18,10 @@ const {
     lang: locale.value,
     slug: route.params.pageSlug,
 });
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

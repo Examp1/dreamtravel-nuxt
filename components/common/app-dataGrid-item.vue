@@ -6,9 +6,8 @@ defineProps({
 });
 </script>
 <template>
-    <!-- TODO to="{name: 'Contry', params: {countryName: item.slug, locale: $i18n.locale == 'en' ? null : $i18n.locale}}" -->
     <NuxtLink
-        to="/#"
+        :to="`/country/${item.slug}`"
         class="dataGridItem"
         :style="`background-image: url(${getMediaPath(item.image)})`"
     >

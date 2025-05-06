@@ -3,6 +3,7 @@ import { useNuxtApp } from "#app";
 import constructorRender from "~/components/constructor/constructor-render.vue";
 import theMainText from "~/components/common/the-main-text.vue";
 import theSubscribeForm from "~/components/common/the-subscribe-form.vue";
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
 const route = useRoute();
 const { locale } = useI18n();
@@ -14,6 +15,10 @@ const {
     lang: locale.value,
     slug: route.params.pageSlug,
 });
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

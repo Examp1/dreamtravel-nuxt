@@ -8,7 +8,7 @@ import appTabs from "~/components/navigation/app-tabs.vue";
 import appMainCarousell from "~/components/country/app-main-carousell.vue";
 import appAnkerList from "~/components/navigation/app-anker-list.vue";
 import appSeeAlso from "~/components/constructor/app-see-also.vue";
-
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
 const route = useRoute();
@@ -19,6 +19,10 @@ const {
     lang: locale.value,
     slug: route.params.countryName,
 });
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({

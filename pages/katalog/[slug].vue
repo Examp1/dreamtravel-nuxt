@@ -2,7 +2,7 @@
 import { useNuxtApp } from "#app";
 import theMainText from "~/components/common/the-main-text.vue";
 import constructorRender from "~/components/constructor/constructor-render.vue";
-
+import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
 const route = useRoute();
@@ -15,6 +15,10 @@ const {
     slug: "katalog",
     type: route.params.slug,
 });
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
 
 if (status !== 200) {
     throw createError({
