@@ -15,7 +15,7 @@ const { initWindowSizeTracking } = getWindowSize();
 
 const route = useRoute();
 
-const showPreloader = ref(false);
+const showPreloader = ref(true);
 
 onMounted(() => {
     const nuxtApp = useNuxtApp();
