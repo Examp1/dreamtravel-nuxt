@@ -6,15 +6,18 @@ const route = useRoute();
 const currentPage = ref(+route.query.page || 0);
 
 const prevPage = computed(() => {
+    const prev  = currentPage.value -1
     if (currentPage.value <= 1) {
         return `${route.path}?page=1`;
     } else {
-        return `${route.path}?page=${Math.max(1, currentPage.value - 1)}`;
+        return `${route.path}?page=${Math.max(1, prev)}`;
     }
 });
 const nextPage = computed(() => {
-    return `${route.path}?page=${Math.max(porps.pagination.last_page, +currentPage.value++)}`;
+    const next = currentPage.value + 1;
+    return `${route.path}?page=${Math.max(porps.pagination.last_page, next)}`;
 });
+const isPrevDisabled = computed(() => currentPage.value <= 1);
 </script>
 
 <template>
@@ -24,7 +27,7 @@ const nextPage = computed(() => {
                 v-if="item.label.includes('Previous')"
                 :key="item.label + '-' + index"
                 :to="prevPage"
-                :class="{ disabled: currentPage-- <= 1 }"
+                :class="{ disabled: isPrevDisabled }"
                 class="arrow prev"
                 ><i class="ic-arrow"></i
             ></NuxtLink>

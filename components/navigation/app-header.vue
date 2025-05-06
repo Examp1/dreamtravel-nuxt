@@ -3,8 +3,7 @@ import { ref, computed, watch } from "vue";
 import { NuxtLink } from "#components";
 import useUtils from "@/composables/useUtils.js";
 const { getMediaPath } = useUtils();
-// import { usePreloaderStore } from "@/stores/preloader";
-// const { isUiLocked, lockingPool } = storeToRefs(usePreloaderStore());
+
 import { getWindowSize } from "@/stores/windowSize";
 const { getSize } = storeToRefs(getWindowSize());
 

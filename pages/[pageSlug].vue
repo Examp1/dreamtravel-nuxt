@@ -45,17 +45,17 @@ if (status !== 200) {
             <div class="container">
                 <constructorRender :constructor="data.constructor" />
             </div>
-            <template v-if="pageCheck">
+            <!-- <template v-if="route.path.includes('contacts')">
                 <location-map
-                    v-for="(item, idx) in globalSetting.offices"
+                    v-for="(item, idx) in globalSetting?.offices"
                     :key="`${idx}_map`"
                     :propsData="item"
                 ></location-map>
-            </template>
+            </template> -->
             <constructorRender :constructor="data.widget" />
         </section>
-        <div class="container-full" v-if="!pageCheck">
-            <theSubscribeForm/>
+        <div class="container-full" v-if="!route.path.includes('contacts')">
+            <theSubscribeForm />
         </div>
     </div>
 </template>
@@ -88,9 +88,7 @@ export default {
     },
     computed: {
         ...mapGetters(["isUiLocked", "globalSetting"]),
-        pageCheck() {
-            return this.route.fullPath.includes("/contacts");
-        },
+        
         mapAppirience() {
             return (
                 this.route.name == "TextPage" &&
