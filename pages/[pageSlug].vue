@@ -1,10 +1,14 @@
 <script setup>
+import { computed } from "vue";
 import { useNuxtApp } from "#app";
 import constructorRender from "~/components/constructor/constructor-render.vue";
 import theMainText from "~/components/common/the-main-text.vue";
 import theSubscribeForm from "~/components/common/the-subscribe-form.vue";
 import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
+import { useGlobalStore } from "@/stores/global";
+const { globalSetting } = useGlobalStore();
+import contactsMap from "~/components/common/contacts-map.vue";
 const route = useRoute();
 const { locale } = useI18n();
 
@@ -17,7 +21,7 @@ const {
 });
 
 if (data.meta) {
-  useMetaHead(data.meta)
+    useMetaHead(data.meta);
 }
 
 if (status !== 200) {
@@ -27,6 +31,9 @@ if (status !== 200) {
         fatal: true,
     });
 }
+const pageCheck = computed(() => {
+    return route.fullPath.includes("contacts");
+});
 </script>
 <template>
     <div
@@ -49,6 +56,13 @@ if (status !== 200) {
             ></app-seo-text>
             <div class="container">
                 <constructorRender :constructor="data.constructor" />
+                <template v-if="pageCheck">
+                    <contactsMap
+                        v-for="(item, idx) in globalSetting.offices"
+                        :key="`${idx}_map`"
+                        :propsData="item"
+                    />
+                </template>
             </div>
             <!-- <template v-if="route.path.includes('contacts')">
                 <location-map
@@ -59,7 +73,7 @@ if (status !== 200) {
             </template> -->
             <constructorRender :constructor="data.widget" />
         </section>
-        <div class="container-full" v-if="!route.path.includes('contacts')">
+        <div class="container-full" v-if="!pageCheck">
             <theSubscribeForm />
         </div>
     </div>
