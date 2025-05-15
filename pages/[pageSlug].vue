@@ -71,7 +71,7 @@ const pageCheck = computed(() => {
                     :propsData="item"
                 ></location-map>
             </template> -->
-            <constructorRender :constructor="data.widget" />
+            <constructorRender :constructor="data.widgets" />
         </section>
         <div class="container-full" v-if="!pageCheck">
             <theSubscribeForm />
