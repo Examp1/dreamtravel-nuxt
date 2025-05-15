@@ -69,6 +69,15 @@ onMounted(() => {
 
 <template>
     <section class="specContainer">
+        <div class="titleWrp">
+            <h2 class="sectionTitle bef">
+                The form of calculation of the service
+            </h2>
+            <p class="descr">
+                Enter the data for ordering the calculation of services. We will
+                set a price and contact you to answer all your questions!
+            </p>
+        </div>
         <div class="bgWrp" :style="bg">
             <div v-if="!isSuccess" class="formWrp" ref="formBody">
                 <form @submit="onSubmit" ref="requestForm">
