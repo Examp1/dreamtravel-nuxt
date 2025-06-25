@@ -11,7 +11,7 @@ defineProps({
 
 const ankerList = ref([]);
 const currentH2Idx = ref(0);
-
+// TODO need refactor
 onMounted(() => {
     //   if (!this.isUiLocked) {
     const h2List = document.querySelectorAll(".contentWrapper > h2");
@@ -81,11 +81,10 @@ export default {
                         :key="idx"
                         @click="currentH2Idx = idx"
                     >
-                        <a
-                            :href="item.link"
+                        <NuxtLink
+                            :to="`#${item.title}`"
                             :class="{ active: currentH2Idx === idx }"
-                            @click="onItemClick(item.title)"
-                            >{{ item.title }}</a
+                            >{{ item.title }}</NuxtLink
                         >
                     </li>
                 </ul>
@@ -105,11 +104,12 @@ export default {
                                 :key="idx"
                                 @click="currentH2Idx = idx"
                             >
-                                <a
-                                    :href="item.link"
+                                <!-- :href="item.link" -->
+                                <NuxtLink
+                                    :to="`#${item.title}`"
                                     :class="{ active: currentH2Idx === idx }"
                                     @click="onItemClick(item.title)"
-                                    >{{ item.title }}</a
+                                    >{{ item.title }}</NuxtLink
                                 >
                             </li>
                         </template>

@@ -37,7 +37,7 @@ fetchMenus(locale.value);
     <div>
         <NuxtRouteAnnouncer />
         <appHeader />
-        <NuxtPage :key="route.fullPath" />
+        <NuxtPage :key="route.path" />
         <appFooter />
         <appCookieModal />
         <transition name="fade" mode="out-in">
