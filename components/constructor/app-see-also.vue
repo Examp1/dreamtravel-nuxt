@@ -7,6 +7,8 @@ defineProps({
     },
     morfTitle: String,
 });
+
+const route = useRoute()
 </script>
 
 <template>
@@ -24,7 +26,7 @@ defineProps({
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-if="item.type === 'hotels'" to="/"
+                    <NuxtLink v-if="item.type === 'hotels'" :to="`/country/${route.params.countryName}/hotels`"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>
@@ -35,7 +37,7 @@ defineProps({
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else-if="item.type === 'tours'" to="/"
+                    <NuxtLink v-else-if="item.type === 'tours'" :to="`/country/${route.params.countryName}/tours`"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>
@@ -47,7 +49,7 @@ defineProps({
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else-if="item.type === 'info'" to="/"
+                    <NuxtLink v-else-if="item.type === 'info'" :to="`/country/${route.params.countryName}`"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>
@@ -58,7 +60,7 @@ defineProps({
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else to="/">
+                    <NuxtLink v-else :to="`/country/${route.params.countryName}`">
                         {{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i>
                     </NuxtLink>
