@@ -11,6 +11,7 @@ const email = ref(null);
 const isSuccess = ref(null);
 
 const formSubmit = () => {
+    if ( !email.value ) return isSuccess.value = false
     try {
         $httpService.post("/api/news/subscribe", {
             email: email.value,
@@ -62,7 +63,6 @@ watch((isSuccess) => {
 </script>
 
 <template>
-    {{ isSuccess }}
     <section class="subscribeForm">
         <img :src="getMediaPath(globalSetting.blog_subscribe_image)" alt="" />
         <div class="form">
