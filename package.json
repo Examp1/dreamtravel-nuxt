@@ -3,8 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "deploy": "git pull && nuxt build && nuxt preview",
-        "deploy-with-generate": "git pull && nuxt build && nuxt generate && nuxt preview",
+        "deploy": "git pull && nuxt build && pm2 restart all",
+        "deploy-with-generate": "git pull && nuxt build && nuxt generate && pm2 restart all",
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
