@@ -60,7 +60,7 @@ const phoneNumbers = computed(() => {
                 </li>
             </ul>
         </div>
-        
+      
         <GoogleMap class="map" :center="coords" :api-key="globalSetting.maps_api_key" :zoom="17" style="height: 600px">
             <Marker 
                 :key="index"
@@ -171,13 +171,17 @@ const phoneNumbers = computed(() => {
     }
 }
 
-.map {
+:deep(.map) {
     width: 100%;
     height: 100%;
     top: 0px;
     left: 0px;
     z-index: 1;
-
+    /* overflow: hidden; */
+    padding: 0;
+    /* .mapdiv{
+        overflow: auto !important;
+    } */
     @media (max-width: 1024px) {
         height: 512px !important;
     }

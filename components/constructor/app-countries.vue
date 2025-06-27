@@ -28,6 +28,9 @@ const countriesItems = computed(() => {
 const getCurrentRegion = (region) => {
     currentRegion.value = region
 }
+const getAllRegion = () => {
+    currentRegion.value = "all"
+}
 
 // import appDataGrid from "../app-dataGrid.vue";
 // import AppTabsFilter from "../common/app-tabs_filter.vue";
