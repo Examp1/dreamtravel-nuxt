@@ -7,7 +7,7 @@ defineProps({
     },
     morfTitle: String,
 });
-
+const localePath = useLocalePath()
 const route = useRoute()
 </script>
 
@@ -26,7 +26,7 @@ const route = useRoute()
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-if="item.type === 'hotels'" :to="`/country/${route.params.countryName}/hotels`"
+                    <NuxtLink v-if="item.type === 'hotels'" :to="localePath(`/country/${route.params.countryName}/hotels`)"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>
@@ -37,7 +37,7 @@ const route = useRoute()
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else-if="item.type === 'tours'" :to="`/country/${route.params.countryName}/tours`"
+                    <NuxtLink v-else-if="item.type === 'tours'" :to="localePath(`/country/${route.params.countryName}/tours`)"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>
@@ -49,7 +49,7 @@ const route = useRoute()
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else-if="item.type === 'info'" :to="`/country/${route.params.countryName}`"
+                    <NuxtLink v-else-if="item.type === 'info'" :to="localePath(`/country/${route.params.countryName}`)"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>
@@ -60,7 +60,7 @@ const route = useRoute()
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else :to="`/country/${route.params.countryName}`">
+                    <NuxtLink v-else :to="localePath(`/country/${route.params.countryName}`)">
                         {{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i>
                     </NuxtLink>

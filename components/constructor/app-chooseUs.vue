@@ -99,7 +99,9 @@ const vItem = computed(() => {
         justify-content: space-between;
         grid-gap: 20px;
         margin-top: 77px;
-
+        .item{
+            box-shadow: unset
+        }
         @media (max-width: 830px) {
             margin-top: 53px;
             flex-direction: column;

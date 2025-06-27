@@ -28,7 +28,7 @@ const menuView = computed(() => {
         return NavMenu;
     }
 });
-
+const localePath = useLocalePath()
 watch(() => route.path, () => {
   menuOpen.value = false;
 });
@@ -67,7 +67,7 @@ watch(() => route.path, () => {
                 <component
                     :is="route.name.includes('index') ? 'span' : NuxtLink"
                     class="logo"
-                    to="/"
+                    :to="localePath('/')"
                     ><img
                         :src="getMediaPath(globalSetting.site_logo_header)"
                         alt="logo"

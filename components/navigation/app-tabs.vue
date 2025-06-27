@@ -4,7 +4,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
-
+const localePath = useLocalePath()
 const route = useRoute();
 const modules = [Navigation];
 
@@ -39,21 +39,21 @@ const basePath = computed(() => `/country/${route.params.countryName}`);
             <swiper-slide v-for="(item, idx) in tabList" :key="idx">
                 <NuxtLink
                     v-if="item.type === 'info'"
-                    :to="`${basePath}/${item.slug}`"
+                    :to="localePath(`${basePath}/${item.slug}`)"
                     >{{ item.tab_name || item.name }}</NuxtLink
                 >
                 <NuxtLink
                     v-else-if="item.type === 'country'"
-                    :to="`${basePath}`"
+                    :to="localePath(basePath)"
                     >{{ item.tab_name || item.name }}</NuxtLink
                 >
-                <NuxtLink v-else-if="!item.type" :to="item.url">{{
+                <NuxtLink v-else-if="!item.type" :to="localePath(item.url)">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
-                <NuxtLink v-else-if="item.type === 'news'" to="/news">{{
+                <NuxtLink v-else-if="item.type === 'news'" :to="localePath('/news')">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
-                <NuxtLink v-else :to="`${basePath}/${item.type}`">{{
+                <NuxtLink v-else :to="localePath(`${basePath}/${item.type}`)">{{
                     item.tab_name || item.name
                 }}</NuxtLink>
             </swiper-slide>

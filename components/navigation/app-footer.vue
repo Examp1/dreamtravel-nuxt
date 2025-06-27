@@ -5,7 +5,7 @@ const { globalSetting, footerMenu } = storeToRefs(useGlobalStore());
 import useUtils from "@/composables/useUtils.js";
 import visaImg from "~/assets/image/visa.svg";
 import mastercard from "~/assets/image/mastercard-logo.svg";
-
+const localePath = useLocalePath()
 const { getMediaPath } = useUtils();
 const route = useRoute();
 </script>
@@ -18,7 +18,7 @@ const route = useRoute();
                     <component
                         v-if="globalSetting.site_logo_footer"
                         :is="route.name.includes('index') ? 'span' : NuxtLink"
-                        to="/"
+                        :to="localePath('/')"
                     >
                         <img
                             :src="getMediaPath(globalSetting.site_logo_footer)"

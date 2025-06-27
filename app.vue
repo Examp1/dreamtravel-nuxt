@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { useNuxtApp } from "#app";
 import appHeader from "./components/navigation/app-header.vue";
 import appFooter from "./components/navigation/app-footer.vue";
@@ -32,6 +32,9 @@ onMounted(() => {
 initWindowSizeTracking();
 fetchGlobalSettings(locale.value);
 fetchMenus(locale.value);
+watch(locale, (newLocale) => {
+    fetchMenus(newLocale)
+})
 </script>
 <template>
     <div>
