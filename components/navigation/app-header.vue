@@ -62,7 +62,7 @@ watch(() => route.path, () => {
                 <app-lang-switcher></app-lang-switcher>
             </div>
         </div>
-        <div class="header__bot">
+        <div class="dn-1200 header__bot">
             <div class="container no-p df jcsb">
                 <component
                     :is="route.name.includes('index') ? 'span' : NuxtLink"
@@ -250,6 +250,11 @@ ul {
         &:hover {
             color: $c-btn;
         }
+    }
+}
+.dn-1200{
+    @media(max-width: 1200px) {
+        display: none;
     }
 }
 </style>
