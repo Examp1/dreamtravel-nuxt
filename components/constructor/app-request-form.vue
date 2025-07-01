@@ -16,7 +16,7 @@ import formPhone from "../form-fields/form-phone.vue";
 import formTimePicker from "../form-fields/form-time-picker.vue";
 import FormCheckboxGroup from "../form-fields/form-checkbox-group.vue";
 
-const route = useRoute()
+const route = useRoute();
 const isLoaded = ref(false);
 
 const { getMediaPath } = useUtils();
@@ -24,7 +24,6 @@ const { getMediaPath } = useUtils();
 const props = defineProps({
     propsData: [Array, Object],
 });
-
 
 const bg = computed(() => {
     const path = getMediaPath(props.propsData.block_background);
@@ -88,6 +87,11 @@ const validationSchema = toTypedSchema(
 const onSubmit = async () => {
     const FormValues = { ...requestForm.value.values };
     console.log(FormValues);
+    $httpService.post("/api/request/send", {
+        form_id: props.propsData.form_id,
+        ...FormValues,
+    });
+    isSuccess.value = true;
     // const { data, status } = await $httpService.post("/api/add-notice", {
     //     page_title: route.path,
     //     ...FormValues,
@@ -115,7 +119,7 @@ onMounted(() => {
                     :validation-schema="validationSchema"
                     @submit="onSubmit"
                     ref="requestForm"
-                    >
+                >
                     <!-- v-slot="{ errors }"
                 {{ errors }} -->
                     <component

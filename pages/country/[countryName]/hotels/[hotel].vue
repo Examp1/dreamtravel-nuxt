@@ -94,7 +94,7 @@ const attributeFiltered = computed(() => {
             </ul>
         </div>
         <appMainCarousell
-            v-if="filteredConstructor.gallery.content.list"
+            v-if="filteredConstructor.gallery && filteredConstructor.gallery.content.list"
             :galleryData="filteredConstructor.gallery.content"
         ></appMainCarousell>
         <div class="container infoZone" v-if="filteredConstructor.otherBlocks">

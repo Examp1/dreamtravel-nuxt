@@ -6,17 +6,16 @@ import { computed, ref, onMounted } from "vue";
 import useUtils from "@/composables/useUtils.js";
 import formInput from "../form-fields/form-input.vue";
 import formLabel from "../form-fields/form-label.vue";
-// import formEmail from "../form-fields/form-email.vue";
+import formEmail from "../form-fields/form-email.vue";
 import formSelect from "../form-fields/form-select.vue";
 import formDataPicker from "../form-fields/form-data-picker.vue";
 import formTextArea from "../form-fields/form-text-area.vue";
-// import formPhone from "../form-fields/form-phone.vue";
+import formPhone from "../form-fields/form-phone.vue";
 import formTimePicker from "../form-fields/form-time-picker.vue";
 import FormCheckboxGroup from "../form-fields/form-checkbox-group.vue";
 
-const route = useRoute();
 const isLoaded = ref(false);
-const { validateField, handleSubmit } = useForm();
+const { handleSubmit } = useForm();
 const { getMediaPath } = useUtils();
 
 const props = defineProps({
@@ -33,10 +32,10 @@ const getComponentName = (name) => {
     switch (name) {
         case "form-input":
             return formInput;
-        // case "phone":
-        //     return formPhone;
-        // case "email":
-        //     return formEmail;
+        case "phone":
+            return formPhone;
+        case "email":
+            return formEmail;
         case "form-time-picker":
             return formTimePicker;
         case "form-select":
