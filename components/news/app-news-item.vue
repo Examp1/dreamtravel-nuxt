@@ -7,16 +7,18 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    link: {
+        type: String,
+        default: "",
+    },
 });
 
-// const isBlogRoute = ref('')
-
-// const tagUrl = computed(() => {
-//     const url = props.data.category
-//         ? props.data.category.url
-//         : props.data.category_url;
-//     return isBlogRoute.value ? url : `/${url}`;
-// });
+const tagUrl = computed(() => {
+    const url = props.data.category
+        ? props.data.category.url
+        : props.data.category_url;
+    return isBlogRoute.value ? url : `/${url}`;
+});
 
 const tagName = computed(() => {
     return props.data.category
@@ -26,9 +28,11 @@ const tagName = computed(() => {
 </script>
 
 <template>
-    <div v-if="data.url" class="newItem">
-        <NuxtLink v-if="tagName" :to="data.category.url" class="tag">{{ tagName }}</NuxtLink>
-        <NuxtLink :to="data.url">
+    <div v-if="data.url || link" class="newItem">
+        <NuxtLink v-if="tagName" :to="data.category.url" class="tag">{{
+            tagName
+        }}</NuxtLink>
+        <NuxtLink :to="data.url || link">
             <p class="title">
                 {{ data.name }}
             </p>
