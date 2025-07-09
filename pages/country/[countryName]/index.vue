@@ -21,9 +21,8 @@ const {
 });
 
 if (data.meta) {
-  useMetaHead(data.meta)
+    useMetaHead(data.meta);
 }
-
 
 if (status !== 200) {
     throw createError({
@@ -65,11 +64,10 @@ const filteredConstructor = computed(() => {
             :galleryData="filteredConstructor.gallery.content"
         ></appMainCarousell>
         <div class="container infoZone" v-if="filteredConstructor.otherBlocks">
-            <appAnkerList
-                :title="$t('countryAnkerListTitle')"
-            ></appAnkerList>
+            <appAnkerList :title="$t('countryAnkerListTitle')"></appAnkerList>
             <div class="contentZone" ref="contentZone">
                 <constructorRender
+                    class="country-constructor"
                     :constructor="filteredConstructor.otherBlocks"
                     :widgets="data.widgets"
                 />
@@ -154,6 +152,15 @@ const filteredConstructor = computed(() => {
   </script> -->
 
 <style lang="scss" scoped>
+:deep(.country-constructor){
+  .contentWrapper{
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+}
+.country-constructor{
+    padding-bottom: 50px;
+}
 .descr {
     font-weight: 300;
     font-size: 17px;

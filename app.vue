@@ -40,7 +40,7 @@ watch(locale, (newLocale) => {
     <div>
         <NuxtRouteAnnouncer />
         <appHeader />
-        <NuxtPage :key="route.path" />
+        <NuxtPage :key="route.fullPath.split('#')[0]"/>
         <appFooter />
         <appCookieModal />
         <transition name="fade" mode="out-in">

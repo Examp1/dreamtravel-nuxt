@@ -49,7 +49,7 @@ const route = useRoute()
                                 locale: currentLangForLink,
                             },
                         } -->
-                    <NuxtLink v-else-if="item.type === 'info'" :to="localePath(`/country/${route.params.countryName}`)"
+                    <NuxtLink v-else-if="item.type === 'info'" :to="localePath(`/country/${route.params.countryName}/${item.slug}`)"
                         >{{ item.tab_name || item.name }}
                         <i class="ic-arrow"></i
                     ></NuxtLink>

@@ -21,7 +21,7 @@ const {
 });
 
 if (data.meta) {
-  useMetaHead(data.meta)
+    useMetaHead(data.meta);
 }
 
 if (status !== 200) {
@@ -94,19 +94,24 @@ const attributeFiltered = computed(() => {
             </ul>
         </div>
         <appMainCarousell
-            v-if="filteredConstructor.gallery && filteredConstructor.gallery.content.list"
+            v-if="
+                filteredConstructor.gallery &&
+                filteredConstructor.gallery.content.list
+            "
             :galleryData="filteredConstructor.gallery.content"
         ></appMainCarousell>
         <div class="container infoZone" v-if="filteredConstructor.otherBlocks">
             <appAnkerList :title="$t('countryAnkerListTitle')"></appAnkerList>
             <div class="contentZone" ref="contentZone">
                 <constructorRender
+                    class="country-constructor"
                     :constructor="filteredConstructor.otherBlocks"
                     :widgets="data.widgets"
                 />
             </div>
         </div>
         <appSeeAlso
+            v-if="data.tabs"
             :morfTitle="data.translate.morf"
             :tabList="data.tabs"
         ></appSeeAlso>
@@ -114,6 +119,15 @@ const attributeFiltered = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+:deep(.country-constructor) {
+    .contentWrapper {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}
+.country-constructor{
+    padding-bottom: 50px;
+}
 h1,
 h1 + .descr {
     margin-bottom: 17px;

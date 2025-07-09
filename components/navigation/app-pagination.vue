@@ -59,7 +59,7 @@ const isPrevDisabled = computed(() => currentPage.value <= 1);
     justify-content: center;
     width: 100%;
     // margin-bottom: 65px;
-    padding: 60px 0;
+    padding:  0px 0px 60px 0px;
 
     a,
     span {

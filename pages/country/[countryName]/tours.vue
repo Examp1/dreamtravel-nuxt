@@ -55,7 +55,7 @@ if (status !== 200) {
                     :data="data.filter"
                     @change="onFilterChange"
                 ></appTourFilter>
-                <div class="hotelList">
+                <div class="hotelList" :class="{'pb-60': data.hotels.last_page == 1}">
                     <appTourItem
                         v-for="(hotel, idx) in data.tours.data"
                         :key="idx"
@@ -120,5 +120,8 @@ if (status !== 200) {
 .textContainer {
     text-align: center;
     padding-top: 70px;
+}
+.pb-60{
+    padding-bottom: 60px;
 }
 </style>
