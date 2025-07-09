@@ -15,7 +15,7 @@ const prevPage = computed(() => {
 });
 const nextPage = computed(() => {
     const next = currentPage.value + 1;
-    return `${route.path}?page=${Math.max(porps.pagination.last_page, next)}`;
+    return `${route.path}?page=${Math.min(next, porps.pagination.last_page)}`;
 });
 const isPrevDisabled = computed(() => currentPage.value <= 1);
 </script>

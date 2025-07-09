@@ -7,18 +7,16 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    link: {
-        type: String,
-        default: "",
-    },
 });
 
-const tagUrl = computed(() => {
-    const url = props.data.category
-        ? props.data.category.url
-        : props.data.category_url;
-    return isBlogRoute.value ? url : `/${url}`;
-});
+// const isBlogRoute = ref('')
+
+// const tagUrl = computed(() => {
+//     const url = props.data.category
+//         ? props.data.category.url
+//         : props.data.category_url;
+//     return isBlogRoute.value ? url : `/${url}`;
+// });
 
 const tagName = computed(() => {
     return props.data.category
@@ -28,14 +26,16 @@ const tagName = computed(() => {
 </script>
 
 <template>
-    <NuxtLink v-if="link" :to="props.link" class="newItem">
-        <NuxtLink v-if="tagName" :to="tagUrl" class="tag">{{ tagName }}</NuxtLink>
-        <p class="title">
-            {{ data.name }}
-        </p>
-        <div class="descr" v-html="data.text"></div>
-        <p class="date">{{ data.public_date }}</p>
-    </NuxtLink>
+    <div v-if="data.url" class="newItem">
+        <NuxtLink v-if="tagName" :to="data.category.url" class="tag">{{ tagName }}</NuxtLink>
+        <NuxtLink :to="data.url">
+            <p class="title">
+                {{ data.name }}
+            </p>
+            <div class="descr" v-html="data.text"></div>
+            <p class="date">{{ data.public_date }}</p>
+        </NuxtLink>
+    </div>
 </template>
 
 <style lang="scss" scoped>
