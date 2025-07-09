@@ -96,6 +96,9 @@ watch((isSuccess) => {
 
 <style lang="scss" scoped>
 .subscribeForm {
+    input, button{
+        outline: none;
+    }
     position: relative;
 
     @media (max-width: 576px) {
