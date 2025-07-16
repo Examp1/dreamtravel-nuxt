@@ -13,18 +13,10 @@ import { useMetaHead } from "~/composables/useMetaHead.js";
 const route = useRoute();
 const currentPage = ref(route.query.page || 1);
 
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/blog/articles/all", {
+const { data, status } = await $httpService.post("/api/blog/articles/all", {
     lang: locale.value,
     page: currentPage.value,
 });
-
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
 
 if (status !== 200) {
     throw createError({
@@ -32,6 +24,9 @@ if (status !== 200) {
         statusMessage: "Page Not Found",
         fatal: true,
     });
+}
+if (data.meta) {
+    useMetaHead(data.meta);
 }
 
 const tabListM = computed(() => {

@@ -15,20 +15,12 @@ const { locale } = useI18n();
 const route = useRoute();
 const currentPage = ref(route.query.page || 0);
 
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/country/get-by-slug", {
+const { data, status } = await $httpService.post("/api/country/get-by-slug", {
     lang: locale.value,
     tours: {},
     slug: route.params.countryName,
     page: currentPage.value,
 });
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
-
 
 if (status !== 200) {
     throw createError({
@@ -36,6 +28,10 @@ if (status !== 200) {
         statusMessage: "Page Not Found",
         fatal: true,
     });
+}
+
+if (data.meta) {
+    useMetaHead(data.meta);
 }
 </script>
 
@@ -55,7 +51,10 @@ if (status !== 200) {
                     :data="data.filter"
                     @change="onFilterChange"
                 ></appTourFilter>
-                <div class="hotelList" :class="{'pb-60': data.hotels.last_page == 1}">
+                <div
+                    class="hotelList"
+                    :class="{ 'pb-60': data?.hotels?.last_page == 1 }"
+                >
                     <appTourItem
                         v-for="(hotel, idx) in data.tours.data"
                         :key="idx"
@@ -63,7 +62,7 @@ if (status !== 200) {
                     ></appTourItem>
                 </div>
                 <appPagination
-                    v-if="data.tours.last_page > 1"
+                    v-if="data?.tours?.last_page > 1"
                     :pagination="data.tours"
                 ></appPagination>
             </div>
@@ -121,7 +120,7 @@ if (status !== 200) {
     text-align: center;
     padding-top: 70px;
 }
-.pb-60{
+.pb-60 {
     padding-bottom: 60px;
 }
 </style>

@@ -8,17 +8,13 @@ const { locale } = useI18n();
 const route = useRoute();
 
 const {
-    data: { data },
+    data,
     status,
 } = await $httpService.post("/api/page/get-by-slug", {
     lang: locale.value,
     slug: "katalog",
     type: route.params.slug,
 });
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
 
 if (status !== 200) {
     throw createError({
@@ -27,6 +23,11 @@ if (status !== 200) {
         fatal: true,
     });
 }
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
+
 </script>
 
 <template>

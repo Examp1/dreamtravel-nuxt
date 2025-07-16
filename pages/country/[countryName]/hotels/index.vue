@@ -17,7 +17,7 @@ const route = useRoute();
 const currentPage = ref(route.query.page || 0);
 
 const {
-    data: { data },
+    data,
     status,
 } = await $httpService.post("/api/country/get-by-slug", {
     lang: locale.value,
@@ -26,10 +26,6 @@ const {
     page: currentPage.value,
 });
 
-if (data.meta) {
-  useMetaHead(data.meta)
-}
-
 if (status !== 200) {
     throw createError({
         statusCode: 404,
@@ -37,6 +33,12 @@ if (status !== 200) {
         fatal: true,
     });
 }
+
+if (data.meta) {
+  useMetaHead(data.meta)
+}
+
+
 </script>
 
 <template>

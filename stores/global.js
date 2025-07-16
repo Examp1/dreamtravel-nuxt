@@ -13,7 +13,7 @@ export const useGlobalStore = defineStore("global", {
             const { data } = await $httpService.post(`/api/settings/all`, {
                 lang,
             });
-            this.globalSetting = data.data;
+            this.globalSetting = data;
         },
         async fetchMenus(lang = "en", ids = [1, 2]) {
             const preloaderStore = usePreloaderStore();
@@ -30,7 +30,7 @@ export const useGlobalStore = defineStore("global", {
                     },
                 );
 
-                Object.values(data.data.items).forEach((el) => {
+                Object.values(data.items).forEach((el) => {
                     if (el.name === "Main") {
                         this.headerMenu = el.items;
                     } else if (el.name === "Footer") {

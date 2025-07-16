@@ -87,7 +87,11 @@ export default defineNuxtPlugin((nuxtApp) => {
                     fetchOptions,
                 );
 
-                return { data: response as T, status, pending: pending.value };
+                return {
+                    data: response.data as T,
+                    status,
+                    pending: pending.value,
+                };
             } catch (error: unknown) {
                 const errorInfo = {
                     message: (error as Error).message || "Что-то пошло не так",

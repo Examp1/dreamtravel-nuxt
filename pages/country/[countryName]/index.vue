@@ -12,17 +12,10 @@ const { $httpService } = useNuxtApp();
 import { useMetaHead } from "~/composables/useMetaHead.js";
 const { locale } = useI18n();
 const route = useRoute();
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/country/get-by-slug", {
+const { data, status } = await $httpService.post("/api/country/get-by-slug", {
     lang: locale.value,
     slug: route.params.countryName,
 });
-
-if (data.meta) {
-    useMetaHead(data.meta);
-}
 
 if (status !== 200) {
     throw createError({
@@ -30,6 +23,10 @@ if (status !== 200) {
         statusMessage: "Page Not Found",
         fatal: true,
     });
+}
+
+if (data.meta) {
+    useMetaHead(data.meta);
 }
 
 const filteredConstructor = computed(() => {
@@ -152,13 +149,13 @@ const filteredConstructor = computed(() => {
   </script> -->
 
 <style lang="scss" scoped>
-:deep(.country-constructor){
-  .contentWrapper{
-    padding-bottom: 0;
-    padding-top: 0;
-  }
+:deep(.country-constructor) {
+    .contentWrapper {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
 }
-.country-constructor{
+.country-constructor {
     padding-bottom: 50px;
 }
 .descr {

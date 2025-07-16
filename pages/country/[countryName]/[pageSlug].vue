@@ -11,17 +11,10 @@ const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
 const route = useRoute();
 
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/info/get-by-slug", {
+const { data, status } = await $httpService.post("/api/info/get-by-slug", {
     lang: locale.value,
     slug: route.params.pageSlug,
 });
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
 
 if (status !== 200) {
     throw createError({
@@ -31,6 +24,9 @@ if (status !== 200) {
     });
 }
 
+if (data.meta) {
+    useMetaHead(data.meta);
+}
 </script>
 
 <template>

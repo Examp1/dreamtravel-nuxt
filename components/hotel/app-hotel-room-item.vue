@@ -22,7 +22,7 @@ const langUse = computed(() => {
 const getRoomInfo = async (slug) => {
     try {
     const {
-        data: { data },
+        data,
     } = await $httpService.post("/api/room/get-by-slug", {
         lang: locale.value,
         slug,

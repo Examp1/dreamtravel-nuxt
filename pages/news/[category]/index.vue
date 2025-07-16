@@ -13,26 +13,24 @@ const { locale } = useI18n();
 const route = useRoute();
 const currentPage = ref(route.query.page || 1);
 
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/blog/articles/get-by-category-slug", {
-    lang: locale.value,
-    slug: route.params.category,
-    page: currentPage.value,
-});
-
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
-
+const { data, status } = await $httpService.post(
+    "/api/blog/articles/get-by-category-slug",
+    {
+        lang: locale.value,
+        slug: route.params.category,
+        page: currentPage.value,
+    },
+);
 if (status !== 200) {
     throw createError({
         statusCode: 404,
         statusMessage: "Page Not Found",
         fatal: true,
     });
+}
+
+if (data.meta) {
+    useMetaHead(data.meta);
 }
 
 const tabListM = computed(() => {

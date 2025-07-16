@@ -11,17 +11,13 @@ const { getMediaPath } = useUtils();
 const { $httpService } = useNuxtApp();
 const route = useRoute();
 const { locale } = useI18n();
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/blog/articles/get-by-slug", {
-    lang: locale.value,
-    slug: route.params.article,
-});
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
+const { data, status } = await $httpService.post(
+    "/api/blog/articles/get-by-slug",
+    {
+        lang: locale.value,
+        slug: route.params.article,
+    },
+);
 
 if (status !== 200) {
     throw createError({
@@ -29,6 +25,10 @@ if (status !== 200) {
         statusMessage: "Page Not Found",
         fatal: true,
     });
+}
+
+if (data.meta) {
+    useMetaHead(data.meta);
 }
 </script>
 <template>

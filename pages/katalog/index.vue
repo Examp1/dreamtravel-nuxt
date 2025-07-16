@@ -6,17 +6,10 @@ import { useMetaHead } from "~/composables/useMetaHead.js";
 const { $httpService } = useNuxtApp();
 const { locale } = useI18n();
 
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/page/get-by-slug", {
+const { data, status } = await $httpService.post("/api/page/get-by-slug", {
     lang: locale.value,
     slug: "katalog",
 });
-
-if (data.meta) {
-  useMetaHead(data.meta)
-}
 
 if (status !== 200) {
     throw createError({
@@ -24,6 +17,10 @@ if (status !== 200) {
         statusMessage: "Page Not Found",
         fatal: true,
     });
+}
+
+if (data.meta) {
+    useMetaHead(data.meta);
 }
 </script>
 <!-- <script>

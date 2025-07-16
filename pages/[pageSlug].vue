@@ -12,17 +12,10 @@ import contactsMap from "~/components/common/contacts-map.vue";
 const route = useRoute();
 const { locale } = useI18n();
 
-const {
-    data: { data },
-    status,
-} = await $httpService.post("/api/page/get-by-slug", {
+const { data, status } = await $httpService.post("/api/page/get-by-slug", {
     lang: locale.value,
     slug: route.params.pageSlug,
 });
-
-if (data.meta) {
-    useMetaHead(data.meta);
-}
 
 if (status !== 200) {
     throw createError({
@@ -31,6 +24,11 @@ if (status !== 200) {
         fatal: true,
     });
 }
+
+if (data?.meta) {
+    useMetaHead(data?.meta);
+}
+
 const pageCheck = computed(() => {
     return route.fullPath.includes("contacts");
 });
@@ -64,13 +62,6 @@ const pageCheck = computed(() => {
                     />
                 </template>
             </div>
-            <!-- <template v-if="route.path.includes('contacts')">
-                <location-map
-                    v-for="(item, idx) in globalSetting?.offices"
-                    :key="`${idx}_map`"
-                    :propsData="item"
-                ></location-map>
-            </template> -->
             <constructorRender :constructor="data.widgets" />
         </section>
         <div class="container-full" v-if="!pageCheck">
