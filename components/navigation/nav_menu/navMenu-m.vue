@@ -3,6 +3,7 @@ import appAccordionWrapper from "~/components/ui/app-accordion-wrapper.vue";
 import appAccordionItem from "~/components/ui/app-accordion-item.vue";
 import { useGlobalStore } from "@/stores/global";
 const { globalSetting } = storeToRefs(useGlobalStore());
+const localePath = useLocalePath()
 
 defineProps({
     propData: Object,
@@ -33,14 +34,14 @@ defineProps({
                         class="subMenu"
                     >
                         <li class="submenuItem">
-                            <NuxtLink :to="item.url">{{ item.name }}</NuxtLink>
+                            <NuxtLink :to="localePath(item.url)">{{ item.name }}</NuxtLink>
                         </li>
                         <li
                             class="submenuItem"
                             v-for="(childItem, idx) in item.children"
                             :key="idx"
                         >
-                            <NuxtLink :to="childItem.url">{{
+                            <NuxtLink :to="localePath(childItem.url)">{{
                                 childItem.name
                             }}</NuxtLink>
                         </li>
@@ -48,7 +49,7 @@ defineProps({
                 </appAccordionItem>
 
                 <li v-else :key="'li-' + idx" class="noSubmenu">
-                    <NuxtLink :to="item.url">{{ item.name }}</NuxtLink>
+                    <NuxtLink :to="localePath(item.url)">{{ item.name }}</NuxtLink>
                 </li>
             </template>
         </appAccordionWrapper>

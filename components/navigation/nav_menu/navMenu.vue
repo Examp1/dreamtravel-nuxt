@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 defineProps({
     propData: Object,
 });
@@ -16,13 +17,13 @@ defineProps({
                 <!-- <app-link class="appLink" :link="item"
                     ><i class="icon ic-dropdown" v-if="item.children.length"></i
                 ></app-link> -->
-                <NuxtLink class="appLink" :to="item.url"
+                <NuxtLink class="appLink" :to="localePath(item.url)"
                     ><i class="icon ic-dropdown" v-if="item.children.length"></i
                 >{{ item.name }}</NuxtLink>
                 <!-- <i class="icon ic-dropdown" v-if="item.children.length"></i> -->
                 <ul v-if="item.children.length" class="subMenu">
                     <li v-for="(childItem, idx) in item.children" :key="idx">
-                        <NuxtLink :to="childItem.url">{{ childItem.name }}</NuxtLink>
+                        <NuxtLink :to="localePath(childItem.url)">{{ childItem.name }}</NuxtLink>
                     </li>
                 </ul>
             </li>

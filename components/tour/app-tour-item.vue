@@ -1,8 +1,13 @@
 <script setup>
+const { getMediaPath } = useUtils();
+const localePath = useLocalePath();
 import { computed } from "vue";
 const props = defineProps({
     propsData: [Array, Object],
 });
+const route = useRoute();
+const basePath = computed(() => `/country/${route.params.countryName}/tours`);
+
 const tourAttrs = computed(() => {
     if (props.propsData) {
         const result = [];
@@ -20,21 +25,16 @@ const tourAttrs = computed(() => {
         return result.slice(0, 4);
     } else return null;
 });
-
 </script>
 
 <template>
-    <!-- TODO :to="{
-            name: 'TourInfo',
-            params: {
-                slug: propsData.slug,
-                locale: $i18n.locale == 'en' ? null : $i18n.locale,
-            },
-        }" -->
-    <NuxtLink :to="propsData" class="tourItem">
+    <NuxtLink
+        :to="localePath(`${basePath}/${propsData.slug}`)"
+        class="tourItem"
+    >
         <div class="l">
             <div class="imgWrp">
-                <img :src="path(propsData.image)" alt="" />
+                <img :src="getMediaPath(propsData.image)" alt="" />
             </div>
         </div>
         <div class="r">
@@ -48,11 +48,9 @@ const tourAttrs = computed(() => {
             <p class="desc">
                 {{ propsData.description }}
             </p>
-            <NuxtLink
-                :to="{ name: 'TourInfo', params: { slug: propsData.slug } }"
-                class="routeIcon"
-                ><i class="icon ic-arrow"></i
-            ></NuxtLink>
+            <!-- :to="{ name: 'TourInfo', params: { slug: propsData.slug } }" -->
+
+            <i class="routeIcon icon ic-arrow"></i>
         </div>
     </NuxtLink>
 </template>
@@ -236,10 +234,7 @@ const tourAttrs = computed(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-
-        i {
-            color: #82ccdc;
-        }
+        color: #82ccdc;
 
         @media (max-width: 576px) {
             position: relative;

@@ -3,6 +3,7 @@ import { computed } from "vue";
 import useUtils from "@/composables/useUtils.js";
 const { getMediaPath } = useUtils();
 const route = useRoute();
+const localePath = useLocalePath()
 defineProps({
     propsData: [Object, Array],
 });
@@ -11,7 +12,7 @@ const basePath = computed(() => `/country/${route.params.countryName}/hotels`);
 
 <template>
     <div class="hotelItem">
-        <NuxtLink :to="`${basePath}/${propsData.slug}`">
+        <NuxtLink :to="localePath(`${basePath}/${propsData.slug}`)">
             <!-- <NuxtLink :to="propsData.link"> -->
             <div class="imgWrp">
                 <img :src="getMediaPath(propsData.image)" alt="" />

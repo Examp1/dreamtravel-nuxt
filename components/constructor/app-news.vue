@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 import AppNewsItem from "../news/app-news-item.vue";
 
 defineProps({
@@ -38,7 +39,7 @@ defineProps({
                 </div>
                 <NuxtLink
                     v-if="propsData.btn_link && propsData.btn_name"
-                    :to="propsData.btn_link"
+                    :to="localePath(propsData.btn_link)"
                     class="btn"
                 >
                     {{ propsData.btn_name }}

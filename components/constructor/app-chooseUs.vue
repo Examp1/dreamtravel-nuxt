@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+const localePath = useLocalePath()
 import useUtils from "@/composables/useUtils.js";
 const { getMediaPath } = useUtils();
 const props = defineProps({
@@ -14,23 +15,6 @@ const hItems = computed(() => {
 const vItem = computed(() => {
     return props.propsData.list[4];
 });
-// export default {
-//     props: {
-//         propsData: {
-//             type: [Array, Object],
-//         },
-//     },
-//     computed: {
-//         hItems() {
-//             let temp = { ...this.propsData.list };
-//             delete temp[4];
-//             return temp;
-//         },
-//         vItem() {
-//             return this.propsData.list[4];
-//         },
-//     },
-// };
 </script>
 
 <template>
@@ -70,7 +54,7 @@ const vItem = computed(() => {
             </div>
             <NuxtLink
                 v-if="propsData.button_link && propsData.button_title"
-                :to="propsData.button_link"
+                :to="localePath(propsData.button_link)"
                 class="btn"
             >
                 {{ propsData.button_title }}

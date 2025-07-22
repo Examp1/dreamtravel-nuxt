@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 const porps = defineProps({
     pagination: Object,
 });
@@ -26,7 +27,7 @@ const isPrevDisabled = computed(() => currentPage.value <= 1);
             <NuxtLink
                 v-if="item.label.includes('Previous')"
                 :key="item.label + '-' + index"
-                :to="prevPage"
+                :to="localePath(prevPage)"
                 :class="{ disabled: isPrevDisabled }"
                 class="arrow prev"
                 ><i class="ic-arrow"></i
@@ -37,14 +38,14 @@ const isPrevDisabled = computed(() => currentPage.value <= 1);
                     !item.label.includes('Next')
                 "
                 :key="item.label + '-' + index"
-                :to="`${route.path}?page=${item.label}`"
+                :to="localePath(`${route.path}?page=${item.label}`)"
                 :class="{ current: item.active }"
                 >{{ item.label }}</NuxtLink
             >
             <NuxtLink
                 v-if="item.label.includes('Next')"
                 :key="item.label + '-' + index"
-                :to="nextPage"
+                :to="localePath(nextPage)"
                 :class="{ disabled: currentPage === pagination.last_page }"
                 class="arrow next"
                 ><i class="ic-arrow"></i

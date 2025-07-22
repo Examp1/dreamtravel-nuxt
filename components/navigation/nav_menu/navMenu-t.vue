@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+const localePath = useLocalePath()
 const props = defineProps({
     propData: Object,
 });
@@ -26,17 +27,17 @@ const getCurrentIdx = (idx) => {
                     {{ item.name }}
                     <i class="icon ic-dropdown" v-if="item.children.length"></i>
                 </span>
-                <nuxtLink class="appLink" :to="item.url" v-else
+                <nuxtLink class="appLink" :to="localePath(item.url)" v-else
                     ><i class="icon ic-dropdown" v-if="item.children.length"></i
                 >{{ item.name }}</nuxtLink>
             </li>
         </ul>
         <ul class="submenu" v-if="submenuList && submenuList.length">
             <li>
-                <nuxtLink :to="propData[currentIdx].url">{{ propData[currentIdx].name }}</nuxtLink>
+                <nuxtLink :to="localePath(propData[currentIdx].url)">{{ propData[currentIdx].name }}</nuxtLink>
             </li>
             <li v-for="(item, idx) in submenuList" :key="idx">
-                <nuxtLink :to="item.url">{{ item.name }}</nuxtLink>
+                <nuxtLink :to="localePath(item.url)">{{ item.name }}</nuxtLink>
             </li>
         </ul>
     </nav>

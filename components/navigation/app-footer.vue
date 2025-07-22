@@ -49,12 +49,12 @@ const route = useRoute();
                 <div class="r">
                     <ul class="footerMenu" v-if="footerMenu">
                         <li v-for="(item, idx) in footerMenu" :key="idx">
-                            <NuxtLink class="appLink" :to="item.url">{{
+                            <NuxtLink class="appLink" :to="localePath(item.url)">{{
                                 item.name
                             }}</NuxtLink>
                         </li>
                     </ul>
-                    <p class="ceoText">
+                    <p v-if="globalSetting.footer_text" class="ceoText">
                         {{ globalSetting.footer_text }}
                     </p>
                 </div>

@@ -1,13 +1,14 @@
 <script setup>
 import useUtils from "@/composables/useUtils.js";
 const { getMediaPath } = useUtils();
+const localePath = useLocalePath()
 defineProps({
     item: [Object, Array],
 });
 </script>
 <template>
     <NuxtLink
-        :to="`/country/${item.slug}`"
+        :to="localePath(`/country/${item.slug}`)"
         class="dataGridItem"
         :style="`background-image: url(${getMediaPath(item.image)})`"
     >

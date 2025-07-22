@@ -50,7 +50,7 @@ const setCheckBoxValue = (checkBoxValue) => {
             @click="setCheckBoxValue(item)"
         >
             <div class="deco"><i class="ic-check1"></i></div>
-            {{ item }}
+            {{ item.item || item }}
         </div>
     </div>
 

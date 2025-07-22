@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 defineProps({
     propsData: [Object, Array],
 });
@@ -26,7 +27,7 @@ import appHotelItem from "~/components/hotel/app-hotel-item.vue";
                 </div>
                 <NuxtLink
                     v-if="propsData.button_link && propsData.button_title"
-                    :to="propsData.button_link"
+                    :to="localePath(propsData.button_link)"
                     class="btn"
                 >
                     {{ propsData.button_title }}

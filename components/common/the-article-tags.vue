@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+const localePath = useLocalePath()
 const route = useRoute();
 const copiedTimer = ref(null);
 const isCopiedLabel = ref(false);
@@ -18,34 +19,6 @@ const copyToClipboard = () => {
     }, 2000);
 };
 
-// export default {
-//     props: {
-//         propsData: {
-//             type: [Array, Object],
-//         },
-//     },
-//     data() {
-//         return {
-//             isCopiedLabel: false,
-//         };
-//     },
-//     computed: {
-//         currentLocation() {
-//             return window.location.href;
-//         },
-//     },
-//     methods: {
-//         copyToClipboard() {
-//             this.$refs.copyInpt.value = window.location.href;
-//             this.$refs.copyInpt.select();
-//             document.execCommand("copy");
-//             this.isCopiedLabel = true;
-//             this.copiedTimer = setTimeout(() => {
-//                 this.isCopiedLabel = false;
-//             }, 2000);
-//         },
-//     },
-// };
 </script>
 
 <template>
@@ -57,7 +30,7 @@ const copyToClipboard = () => {
             <div class="wrp df jcsb">
                 <ul class="tags">
                     <li v-for="(item, idx) in propsData" :key="idx">
-                        <NuxtLink :to="`/news/tag/${item.slug}`">
+                        <NuxtLink :to="localePath(`/news/tag/${item.slug}`)">
                             {{ item.name }}
                         </NuxtLink>
                     </li>

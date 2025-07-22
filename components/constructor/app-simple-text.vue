@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+const localePath = useLocalePath()
 import { useGlobalStore } from "@/stores/global";
 const { globalSetting } = useGlobalStore();
 defineProps({
@@ -90,7 +91,7 @@ export default {
                 isExtUrl(propsData.button_link) ? 'default-link' : 'router-link'
             "
             :target="isExtUrl(propsData.button_link) ? '_blank' : '_self'"
-            :to="propsData.button_link"
+            :to="localePath(propsData.button_link)"
         >
             {{ propsData.button_title }}
             <i
