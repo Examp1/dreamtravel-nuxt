@@ -1,6 +1,13 @@
+<script setup>
+const { getMediaPath } = useUtils();
+defineProps({
+    propsData: [Object, Array],
+});
+</script>
+
 <template>
     <section class="imgBlock">
-        <img src="@/assets/image/gall.png" alt="" />
+        <img :src="getMediaPath(propsData.image)" alt="" />
     </section>
 </template>
 
